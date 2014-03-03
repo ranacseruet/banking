@@ -7,6 +7,21 @@ class BaseController extends Controller {
 	 *
 	 * @return void
 	 */
+        var $data;
+        public function __construct() {
+         
+            $this->logged_in_user  =   Auth::user();
+            $this->is_admin        =   "";
+            if($this->logged_in_user){
+                if($this->logged_in_user->role_id==1){
+                    $this->is_admin  = "admin";
+                }
+
+            }
+            View::share('is_admin', $this->is_admin);
+            
+        }
+        
 	protected function setupLayout()
 	{
 		if ( ! is_null($this->layout))

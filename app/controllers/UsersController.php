@@ -3,8 +3,9 @@
 class UsersController extends BaseController {
 
 	protected $layout = "layouts.main";
-
+       
 	public function __construct() {
+                parent::__construct(); 
 		$this->beforeFilter('csrf', array('on'=>'post'));
 		$this->beforeFilter('auth', array('only'=>array('getDashboard')));
                 if(Auth::check()){
@@ -33,6 +34,7 @@ class UsersController extends BaseController {
 	}
 
 	public function getLogin() {
+                
 		$this->layout->content = View::make('users.login');
 	}
 
@@ -46,10 +48,14 @@ class UsersController extends BaseController {
 		}
 	}
 
-	public function getDashboard() {
-                $data['user']   = Auth::user();
-                
-		$this->layout->content = View::make('users.dashboard',$data);
+        public function getDashboard() {
+            $this->data["user"]   = Auth::user();
+            if($this->data["user"]->role_id==1){
+                return Redirect::to("admin/dashboard");
+            }
+            else{
+                $this->layout->content = View::make('users.dashboard',$this->data);
+            }
 	}
 
 	public function getLogout() {

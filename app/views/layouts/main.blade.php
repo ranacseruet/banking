@@ -15,9 +15,16 @@
             <div class="container">
                 <ul class="nav"> 
                      @if(!Auth::check())
+                            
                             <li>{{ HTML::link('users/register', 'Register') }}</li>   
-                            <li>{{ HTML::link('users/login', 'Login') }}</li>   
+                            <li>{{ HTML::link('users/login', 'Login') }}</li>
+                            
                     @else
+                    
+                             @if($is_admin)
+                                <li>{{ HTML::link('admin/users', 'Users') }}</li>   
+                                
+                             @endif
                             <li>{{ HTML::link('users/logout', 'logout') }}</li>
                     @endif
                 </ul> 
