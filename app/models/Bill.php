@@ -1,11 +1,11 @@
 <?php
 /**
- * DxUsers
+ * Bill
  *
  * @Table(name="bills")
  * @Entity
  */
-class Bill
+class Bill implements IPayee
 {
     /**
      * @var integer $id
