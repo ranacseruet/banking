@@ -8,7 +8,8 @@ class UsersController extends BaseController {
                 parent::__construct(); 
 		$this->beforeFilter('csrf', array('on'=>'post'));
 		$this->beforeFilter('auth', array('only'=>array('getDashboard')));
-                if(Auth::check()){
+                if(Auth::check())
+                {
                     return Redirect::to('users/dashboard')->with('message', 'You are already logged in!');
                 }
 	}
@@ -50,6 +51,12 @@ class UsersController extends BaseController {
 
         public function getDashboard() {
             $this->data["user"]   = Auth::user();
+            
+            $bill = new Bill();
+            $bill->setName("test");
+            \Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine::persist($bill);
+            \Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine::flush();
+            
             if($this->data["user"]->role_id==1){
                 return Redirect::to("admin/dashboard");
             }

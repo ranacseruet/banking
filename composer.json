@@ -5,7 +5,13 @@
 	"license": "MIT",
 	"require": {
 		"laravel/framework": "4.1.*",
-                "twitter/bootstrap": "*"
+                "twitter/bootstrap": "*",
+                "doctrine/orm": "2.4.0",
+                "illuminate/support" : "4.*",
+                "doctrine/orm" : "2.4.0",
+                "doctrine/migrations": "1.0.*@dev",
+                "doctrine/dbal": "2.5.*@dev",
+                "atrauzzi/laravel-doctrine": "dev-master"
 	},
 	"autoload": {
 		"classmap": [
