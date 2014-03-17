@@ -8,3 +8,4 @@ composer.lock
 Thumbs.db
 /app/storage/cache/
 /app/config/packages/atrauzzi/laravel-doctrine/doctrine.php
+.idea
