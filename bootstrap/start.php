@@ -60,6 +60,18 @@ require $framework.'/Illuminate/Foundation/start.php';
 
 /*
 |--------------------------------------------------------------------------
+| Doctrine Plugin Registration
+|--------------------------------------------------------------------------
+| This script helps to register MySQL ENUMs to map to Doctrine varchars
+|
+*/
+
+$em   = App::make('doctrine');
+$conn = $em->getConnection();
+$conn->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
+
+/*
+|--------------------------------------------------------------------------
 | Return The Application
 |--------------------------------------------------------------------------
 |
