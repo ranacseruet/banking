@@ -1,60 +1,57 @@
 <?php
 
-use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\Reminders\RemindableInterface;
+/**
+ * User Entity
+ *
+ * @Table(name="users")
+ * @Entity
+ */
+class User
+{
+    /**
+     * @var integer $id
+     *
+     * @Column(name="id", type="integer", nullable=false)
+     * @Id
+     * @GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
 
-class User extends Eloquent implements UserInterface, RemindableInterface {
+    /**
+     * @var string $username
+     *
+     * @Column(name="username", type="string", length=30, nullable=false, unique=true)
+     */
+    private $username;
 
-	public static $rules = array(
-		'username'=>'required|alpha|min:2',
-		'email'=>'required|email|unique:users',
-		'password'=>'required|alpha_num|between:6,12|confirmed',
-		'password_confirmation'=>'required|alpha_num|between:6,12'
-	);
+    /**
+     * @var string $password
+     *
+     * @Column(name="password", type="string", length=50, nullable=false)
+     */
+    private $password;
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'users';
 
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
-	protected $hidden = array('password');
+    /**
+     * @var string $roolId
+     *
+     * @Column(name="rool_id", type="smallint", nullable=false)
+     */
+    private $roolId;
 
-        
-	/**
-	 * Get the unique identifier for the user.
-	 *
-	 * @return mixed
-	 */
-	public function getAuthIdentifier()
-	{
-		return $this->getKey();
-	}
 
-	/**
-	 * Get the password for the user.
-	 *
-	 * @return string
-	 */
-	public function getAuthPassword()
-	{
-		return $this->password;
-	}
+    /**
+     * @var string $firstName
+     *
+     * @Column(name="first_name", type="string", length=50, nullable=true)
+     */
+    private $firstName;
 
-	/**
-	 * Get the e-mail address where password reminders are sent.
-	 *
-	 * @return string
-	 */
-	public function getReminderEmail()
-	{
-		return $this->email;
-	}
 
+    /**
+     * @var string $lastName
+     *
+     * @Column(name="last_name", type="string", length=50, nullable=true)
+     */
+    private $lastName;
 }
