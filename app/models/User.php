@@ -1,5 +1,7 @@
 <?php
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * User Entity
  *
@@ -39,7 +41,6 @@ class User
      */
     private $roolId;
 
-
     /**
      * @var string $firstName
      *
@@ -47,11 +48,24 @@ class User
      */
     private $firstName;
 
-
     /**
      * @var string $lastName
      *
      * @Column(name="last_name", type="string", length=50, nullable=true)
      */
     private $lastName;
+
+
+    /**
+     * @var string $accounts
+     *
+     * @OneToMany(targetEntity="Account", mappedBy="user")
+     **/
+    private $accounts;
+
+
+    public function __construct()
+    {
+        $this->accounts = new ArrayCollection();
+    }
 }

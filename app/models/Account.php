@@ -1,4 +1,6 @@
 <?php
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Account Entity
  *
@@ -48,12 +50,11 @@ class Account
 
 
     /**
-     * @var $user
+     * @var string $cards
      *
-     * @ManyToOne(targetEntity="User")
-     * @JoinColumn(name="user_id", referencedColumnName="id")
+     * @OneToMany(targetEntity="Card", mappedBy="account")
      */
-    private $user;
+    private $cards;
 
 
     /**
@@ -71,6 +72,10 @@ class Account
     private $updateDate;
 
 
+    public function __construct()
+    {
+        $this->cards = new ArrayCollection();
+    }
     
     /**
      * Get id

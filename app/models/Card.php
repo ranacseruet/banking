@@ -55,6 +55,15 @@ class Card
 
 
     /**
+     * @var $account;
+     *
+     * @ManyToOne(targetEntity="Account", inversedBy="cards")
+     * @JoinColumn(name="account_id", referencedColumnName="id")
+     **/
+    private $account;
+
+
+    /**
      * @var \DateTime $createDate
      *
      * @ORM\Column(name="create_date", type="date", nullable=false)
