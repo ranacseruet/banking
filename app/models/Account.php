@@ -44,9 +44,18 @@ class Account
     /**
      * @var string $type
      *
-     * @Column(name="type", type="varchar", columnDefinition="ENUM('Saving', 'checking', 'Investment')")
+     * @Column(name="type", type="string", columnDefinition="ENUM('Saving', 'checking', 'Investment')")
      */
     private $type;
+
+
+   /**
+    * @var string $user
+    *
+    * @ManyToOne(targetEntity="User", inversedBy="accounts")
+    * @JoinColumn(name="user_id", referencedColumnName="id")
+    */
+    private $user;
 
 
     /**
