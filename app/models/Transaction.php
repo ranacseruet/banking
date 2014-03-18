@@ -30,6 +30,14 @@ class Transaction
      */
     private $type;
     
+     /**
+     * @var $account;
+     *
+     * @ManyToOne(targetEntity="Account", inversedBy="transactions")
+     * @JoinColumn(name="account_id", referencedColumnName="id")
+     **/
+    private $account;
+    
     /**
      * Get id
      *
@@ -82,5 +90,27 @@ class Transaction
     public function getType()
     {
         return $this->type;
+    }
+    
+    /**
+     * Set account
+     *
+     * @param Account type
+     * @return Transaction
+     */
+    public function setAccount($account)
+    {
+        $this->account = $account;
+        return $this;
+    }
+
+    /**
+     * Get account
+     *
+     * @return Account 
+     */
+    public function getAccount()
+    {
+        return $this->account;
     }
 }

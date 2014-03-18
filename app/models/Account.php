@@ -79,14 +79,21 @@ class Account
      * @ORM\Column(name="update_date", type="datetime", nullable=false)
      */
     private $updateDate;
+    
+     /**
+     * @var ArrayCollection $transactions
+     *
+     * @OneToMany(targetEntity="Transaction", mappedBy="account")
+     */
+    private $transactions;
 
 
     public function __construct()
     {
         $this->cards = new ArrayCollection();
+        $this->transactions = new ArrayCollection();
     }
-    
-    /**
+     /**
      * Get id
      *
      * @return integer 
@@ -167,4 +174,16 @@ class Account
     {
         return $this->type;
     }
+    
+    public function getTransactions() 
+    {
+        return $this->transactions;
+    }
+
+    public function setTransactions(ArrayCollection $transactions)
+    {
+        $this->transactions = $transactions;
+        return $this;
+    }
+    
 }
