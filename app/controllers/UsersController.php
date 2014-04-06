@@ -1,32 +1,53 @@
 <?php
+use \Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine;
 
-class UsersController extends BaseController {
+class UsersController extends BaseController
+{
 
 	protected $layout = "layouts.main";
-       
-	public function __construct() {
-                parent::__construct(); 
+
+    /**
+     * Initializing value
+     */
+    public function __construct()
+    {
+        parent::__construct();
 		$this->beforeFilter('csrf', array('on'=>'post'));
 		$this->beforeFilter('auth', array('only'=>array('getDashboard')));
-                if(Auth::check())
-                {
-                    return Redirect::to('users/dashboard')->with('message', 'You are already logged in!');
-                }
+
+        if (Auth::check()) {
+            return Redirect::to('users/dashboard')->with('message', 'You are already logged in!');
+        }
 	}
 
-	public function getRegister() {
+    /**
+     * Return Register Page
+     *
+     * @route GET /users/register
+     */
+    public function getRegister()
+    {
 		$this->layout->content = View::make('users.register');
 	}
 
-	public function postRegister() {
-		$validator = Validator::make(Input::all(), User::$rules);
+    /**
+     * Process Registration form
+     *
+     * @route POST /users/register
+     * @return mixed
+     */
+    public function postRegister()
+    {
+		$validator = Validator::make(Input::all(), User::getRules());
 
 		if ($validator->passes()) {
 			$user = new User;
-			$user->username = Input::get('username');
-			$user->email = Input::get('email');
-			$user->password = Hash::make(Input::get('password'));
-			$user->save();
+			$user->setUsername(Input::get('username'));
+			$user->setEmailAddress(Input::get('email'));
+			$user->setPassword(Hash::make(Input::get('password')));
+            $user->setRoolId(2);
+			Doctrine::persist($user);
+            Doctrine::flush();
 
 			return Redirect::to('users/login')->with('message', 'Thanks for registering!');
 		} else {
@@ -34,12 +55,18 @@ class UsersController extends BaseController {
 		}
 	}
 
-	public function getLogin() {
+    /**
+     *
+     */
+    public function getLogin() {
                 
 		$this->layout->content = View::make('users.login');
 	}
 
-	public function postSignin() {
+    /**
+     * @return mixed
+     */
+    public function postSignin() {
 		if (Auth::attempt(array('email'=>Input::get('email'), 'password'=>Input::get('password')))) {
 			return Redirect::to('users/dashboard')->with('message', 'You are now logged in!');
 		} else {
@@ -49,7 +76,10 @@ class UsersController extends BaseController {
 		}
 	}
 
-        public function getDashboard() {
+    /**
+     * @return mixed
+     */
+    public function getDashboard() {
             $this->data["user"]   = Auth::user();
             
             $bill = new Bill();
@@ -65,7 +95,10 @@ class UsersController extends BaseController {
             }
 	}
 
-	public function getLogout() {
+    /**
+     * @return mixed
+     */
+    public function getLogout() {
 		Auth::logout();
 		return Redirect::to('users/login')->with('message', 'Your are now logged out!');
 	}
