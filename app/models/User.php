@@ -33,6 +33,13 @@ class User
      */
     private $password;
 
+    /**
+     * @var string $emailAddress
+     *
+     * @Column(name="email_address", type="string", length=100, nullable=true)
+     */
+    private $emailAddress;
+
 
     /**
      * @var string $roolId
@@ -139,6 +146,27 @@ class User
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * Set Password
+     *
+     * @param string $emailAddress
+     * @return $this
+     */
+    public function setEmailAddress($emailAddress)
+    {
+        $this->emailAddress = $emailAddress;
+        return $this;
+    }
+
+    /**
+     * Get Password
+     * @return string
+     */
+    public function getEmailAddress()
+    {
+        return $this->emailAddress;
     }
 
     /**
