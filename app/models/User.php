@@ -70,6 +70,20 @@ class User
      **/
     private $accounts;
 
+    /**
+     * @var \DateTime $createDate
+     *
+     * @ORM\Column(name="create_date", type="date", nullable=false)
+     */
+    private $createDate;
+
+    /**
+     * @var \DateTime $modifyDate
+     *
+     * @ORM\Column(name="update_date", type="datetime", nullable=false)
+     */
+    private $updateDate;
+
 
     public function __construct()
     {
@@ -203,5 +217,52 @@ class User
     public function getUsername()
     {
         return $this->username;
+    }
+
+    /**
+     * @param \DateTime $updateDate
+     * @return $this;
+     */
+    public function setUpdateDate($updateDate)
+    {
+        $this->updateDate = $updateDate;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
+
+    /**
+     * @param \DateTime $createDate
+     * @return $this;
+     */
+    public function setCreateDate($createDate)
+    {
+        $this->createDate = $createDate;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreateDate()
+    {
+        return $this->createDate;
+    }
+
+
+    public static function getRules()
+    {
+        return array('first_name' => 'required',
+                     'last_name'  => 'required',
+                     'password'   => 'required|min:8',
+                     'email'      => 'required|email',
+                     'username'   => 'required|alpha_num|unique:users'
+        );
     }
 }

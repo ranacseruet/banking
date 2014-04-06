@@ -41,12 +41,17 @@ class UsersController extends BaseController
 		$validator = Validator::make(Input::all(), User::getRules());
 
 		if ($validator->passes()) {
-			$user = new User;
-			$user->setUsername(Input::get('username'));
-			$user->setEmailAddress(Input::get('email'));
-			$user->setPassword(Hash::make(Input::get('password')));
-            $user->setRoolId(2);
-			Doctrine::persist($user);
+
+			$userEntity = new User;
+			$userEntity->setUsername(Input::get('username'));
+			$userEntity->setEmailAddress(Input::get('email'));
+			$userEntity->setPassword(Hash::make(Input::get('password')));
+            $userEntity->setFirstName(Input::get('first_name'));
+            $userEntity->setLastName(Input::get('last_name'));
+            $userEntity->setCreateDate(new DateTime('now'));
+
+            $userEntity->setRoolId(2);
+			Doctrine::persist($userEntity);
             Doctrine::flush();
 
 			return Redirect::to('users/login')->with('message', 'Thanks for registering!');
