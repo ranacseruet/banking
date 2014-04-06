@@ -5,7 +5,7 @@
  * @Table(name="investments")
  * @Entity
  */
-class Investment implements IPayee
+class Investment
 {
     /**
      * @var integer $id
@@ -29,6 +29,13 @@ class Investment implements IPayee
      * @Column(name="type", type="string", length=25, nullable=false)
      */
     private $type;
+    
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection
+     * @ManyToMany(targetEntity="Account", inversedBy="payees")
+     * @JoinTable(name="account_payee")
+     **/
+    //private $accounts;
     
     /**
      * Get id
@@ -83,4 +90,10 @@ class Investment implements IPayee
     {
         return $this->type;
     }
+
+    public function getAccounts() 
+    {
+        
+    }
+
 }

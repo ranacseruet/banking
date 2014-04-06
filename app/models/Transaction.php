@@ -93,6 +93,16 @@ class Transaction
     }
     
     /**
+     * Get account
+     *
+     * @return Account 
+     */
+    public function getAccount()
+    {
+        return $this->account;
+    }
+    
+    /**
      * Set account
      *
      * @param Account type
@@ -102,15 +112,5 @@ class Transaction
     {
         $this->account = $account;
         return $this;
-    }
-
-    /**
-     * Get account
-     *
-     * @return Account 
-     */
-    public function getAccount()
-    {
-        return $this->account;
     }
 }
