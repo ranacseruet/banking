@@ -15,3 +15,4 @@ Route::get('/', 'HomeController@home');
 Route::controller('users', 'UsersController');
 Route::controller('admin', 'AdminController');
 Route::resource('transfer', 'TransferController');
+Route::resource('account', 'AccountController');
