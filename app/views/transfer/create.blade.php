@@ -20,6 +20,11 @@
 		{{ Form::text('amount', Input::old('amount'), array('class' => 'form-control')) }}
 	</div>
 
+        <div class="form-group">
+		{{ Form::label('description', 'Description') }}
+		{{ Form::text('description', Input::old('description'), array('class' => 'form-control')) }}
+	</div>
+
 	{{ Form::submit('Make The Payment!', array('class' => 'btn btn-primary')) }}
 
 {{ Form::close() }}

@@ -30,6 +30,20 @@ class Transaction
      */
     private $type;
     
+    /**
+     * @var string $type debit|credit
+     *
+     * @Column(name="description", type="string", length=250, nullable=true)
+     */
+    private $description;
+
+     /**
+     * @var string $type debit|credit
+     *
+     * @Column(name="createTime", type="datetime")
+     */
+    private $createTime;
+    
      /**
      * @var $account;
      *
@@ -37,6 +51,12 @@ class Transaction
      * @JoinColumn(name="account_id", referencedColumnName="id")
      **/
     private $account;
+    
+    public function __construct() 
+    {
+        $this->createTime = new DateTime();
+    }
+    
     
     /**
      * Get id
@@ -111,6 +131,24 @@ class Transaction
     public function setAccount($account)
     {
         $this->account = $account;
+        return $this;
+    }
+    
+    public function getDescription() {
+        return $this->description;
+    }
+
+    public function getCreateTime() {
+        return $this->createTime;
+    }
+
+    public function setDescription($description) {
+        $this->description = $description;
+        return $this;
+    }
+
+    public function setCreateTime($createTime) {
+        $this->createTime = $createTime;
         return $this;
     }
 }
