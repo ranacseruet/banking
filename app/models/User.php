@@ -14,6 +14,20 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 class User extends Eloquent implements UserInterface, RemindableInterface
 {
     /**
+    * The database table used by the model.
+    *
+    * @var string
+    */
+   protected $table = 'users';
+
+   /**
+    * The attributes excluded from the model's JSON form.
+    *
+    * @var array
+    */
+   protected $hidden = array('password');
+        
+    /**
      * @var integer $id
      *
      * @Column(name="id", type="integer", nullable=false)
@@ -27,12 +41,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface
      *
      * @Column(name="username", type="string", length=30, nullable=false, unique=true)
      */
-    private $username;
+    public $username;
 
     /**
      * @var string $password
      *
-     * @Column(name="password", type="string", length=50, nullable=false)
+     * @Column(name="password", type="string", length=64, nullable=false)
      */
     private $password;
 
@@ -92,7 +106,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface
     {
         $this->accounts = new ArrayCollection();
     }
+    
+    public function getId() {
+        return $this->id;
+    }
 
+    
     /**
      * @param string $accounts
      * @return $this;
@@ -265,7 +284,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	 */
 	public function getAuthIdentifier()
 	{
-		return $this->id;
+		return $this->getKey();
 	}
 
 	/**

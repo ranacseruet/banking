@@ -77,9 +77,16 @@ class UsersController extends BaseController
      * @return mixed
      */
     public function postSignin() {
-		if (Auth::attempt(array('email'=>Input::get('email'), 'password'=> Hash::make(Input::get('password'))))) {
+		
+                $user = Doctrine::getRepository("User")->findOneBy(array("email" => Input::get('email')));
+                if(Hash::check(Input::get('password'), $user->getPassword())) {
+                    Auth::login(User::find($user->getid()));   
+                    return Redirect::to('users/dashboard')->with('message', 'You are now logged in!');
+                }
+                /*if (Auth::attempt(array('email'=>Input::get('email'), 'password'=> Input::get('password')))) {
 			return Redirect::to('users/dashboard')->with('message', 'You are now logged in!');
-		} else {
+		} */
+                else {
 			return Redirect::to('users/login')
 				->with('message', 'Your username/password combination was incorrect')
 				->withInput();
@@ -90,12 +97,7 @@ class UsersController extends BaseController
      * @return mixed
      */
     public function getDashboard() {
-            $this->data["user"]   = Auth::users();
-            
-            $bill = new Bill();
-            $bill->setName("test");
-            \Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine::persist($bill);
-            \Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine::flush();
+            $this->data["user"]   = Auth::user();
             
             if($this->data["user"]->role_id==1){
                 return Redirect::to("admin/dashboard");
