@@ -61,7 +61,8 @@ class TransferController extends \BaseController {
 		$rules = array(
 			'from_account'       => 'required',
 			'to_account'      => 'required',
-			'amount' => 'required|numeric'
+			'amount'        => 'required|numeric',
+                        'description' => 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 
@@ -75,12 +76,14 @@ class TransferController extends \BaseController {
 			$transaction = new Transaction();
 			$transaction->setAccount(Doctrine::getRepository("Account")->find(Input::get('from_account')));
 			$transaction->setAmount(Input::get('amount'));
+                        $transaction->setDescription(Input::get('description'));
 			$transaction->setType("D");
                         Doctrine::persist($transaction);
                         
                         $transaction = new Transaction();
 			$transaction->setAccount(Doctrine::getRepository("Account")->find(Input::get('to_account')));
 			$transaction->setAmount(Input::get('amount'));
+                        $transaction->setDescription(Input::get('description'));
 			$transaction->setType("C");
                         Doctrine::persist($transaction);
                         
