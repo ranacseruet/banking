@@ -1,5 +1,7 @@
 <?php
 
+use Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine;
+
 /**
  * User Controller
  *
@@ -7,8 +9,6 @@
  *
  * @author Eftakhairul Islam <eftakhairul@gmail.com>
  */
-use Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine;
-
 class UsersController extends BaseController
 {
 

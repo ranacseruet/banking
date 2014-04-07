@@ -1,5 +1,7 @@
 <?php
 
+use Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine;
+
 /**
  * Admin Controller
  *
@@ -7,8 +9,6 @@
  *
  * @author Eftakhairul Islam <eftakhairul@gmail.com>
  */
-use Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine;
-
 class AdminController extends BaseController{
     
      protected $layout = "layouts.main";

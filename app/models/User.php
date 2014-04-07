@@ -113,12 +113,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface
     {
         $this->accounts = new ArrayCollection();
     }
-    
-    public function getId() {
-        return $this->id;
-    }
 
-    
     /**
      * Return the id
      * @return $this;

@@ -9,6 +9,10 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Account
 {
+    CONST SAVING     = 'saving';
+    CONST CHECKING   = 'checking';
+    CONST INVESTMENT = 'investment';
+
     /**
      * @var integer $id
      *
@@ -44,10 +48,9 @@ class Account
     /**
      * @var string $type
      *
-     * @Column(name="type", type="string", columnDefinition="ENUM('Saving', 'checking', 'Investment')")
+     * @Column(name="type", type="string", columnDefinition="ENUM('saving', 'checking', 'investment')")
      */
     private $type;
-
 
    /**
     * @var string $user
@@ -174,6 +177,60 @@ class Account
     {
         return $this->type;
     }
+
+    /**
+     * @param \DateTime $createDate
+     * @return $this
+     */
+    public function setCreateDate($createDate)
+    {
+        $this->createDate = $createDate;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreateDate()
+    {
+        return $this->createDate;
+    }
+
+    /**
+     * @param \DateTime $updateDate
+     * @return $this
+     */
+    public function setUpdateDate($updateDate)
+    {
+        $this->updateDate = $updateDate;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
+
+    /**
+     * @param User $user
+     * @return $this
+     */
+    public function setUser(User $user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
     
     public function getTransactions() 
     {
@@ -184,6 +241,31 @@ class Account
     {
         $this->transactions = $transactions;
         return $this;
+    }
+
+    /**
+     * Return all statues / enum type
+     *
+     * @return array
+     */
+    public static function getALLStatuses()
+    {
+        return array('saving'      => self::SAVING,
+                     'investment'  => self::INVESTMENT,
+                     'checking'    => self::CHECKING );
+    }
+
+    /**
+     * Return all rules for validation
+     *
+     * @return array
+     */
+    public static function getRules()
+    {
+        return array('account_no'    => 'required|between:12,16|unique:accounts',
+                     'interest_rate' => 'required',
+                     'type'          => 'required'
+        );
     }
     
 }
