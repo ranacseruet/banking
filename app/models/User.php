@@ -2,13 +2,16 @@
 
 use Doctrine\Common\Collections\ArrayCollection;
 
+use Illuminate\Auth\UserInterface;
+use Illuminate\Auth\Reminders\RemindableInterface;
+
 /**
  * User Entity
  *
  * @Table(name="users")
  * @Entity
  */
-class User
+class User extends Eloquent implements UserInterface, RemindableInterface
 {
     /**
      * @var integer $id
@@ -34,11 +37,11 @@ class User
     private $password;
 
     /**
-     * @var string $emailAddress
+     * @var string $email
      *
-     * @Column(name="email_address", type="string", length=100, nullable=true)
+     * @Column(name="email", type="string", length=100, nullable=true)
      */
-    private $emailAddress;
+    private $email;
 
 
     /**
@@ -150,7 +153,7 @@ class User
      */
     public function setPassword($password)
     {
-        $this->password = md5($password);
+        $this->password = $password;
         return $this;
     }
 
@@ -168,9 +171,9 @@ class User
      * @param string $emailAddress
      * @return $this
      */
-    public function setEmailAddress($emailAddress)
+    public function setEmail($emailAddress)
     {
-        $this->emailAddress = $emailAddress;
+        $this->email = $emailAddress;
         return $this;
     }
 
@@ -178,9 +181,9 @@ class User
      * Get Password
      * @return string
      */
-    public function getEmailAddress()
+    public function getEmail()
     {
-        return $this->emailAddress;
+        return $this->email;
     }
 
     /**
@@ -255,14 +258,45 @@ class User
         return $this->createDate;
     }
 
+    /**
+	 * Get the unique identifier for the user.
+	 *
+	 * @return mixed
+	 */
+	public function getAuthIdentifier()
+	{
+		return $this->id;
+	}
+
+	/**
+	 * Get the password for the user.
+	 *
+	 * @return string
+	 */
+	public function getAuthPassword()
+	{
+		return $this->password;
+	}
+
+	/**
+	 * Get the e-mail address where password reminders are sent.
+	 *
+	 * @return string
+	 */
+	public function getReminderEmail()
+	{
+		return $this->email;
+	}
+
 
     public static function getRules()
     {
-        return array('first_name' => 'required',
-                     'last_name'  => 'required',
-                     'password'   => 'required|min:8',
-                     'email'      => 'required|email',
-                     'username'   => 'required|alpha_num|unique:users'
+        return array('first_name'               => 'required',
+                     'last_name'                => 'required',
+                     'password'                 => 'required|alpha_num|between:6,12|confirmed',
+		             'password_confirmation'    => 'required|alpha_num|between:6,12',
+                     'email'                    => 'required|email|unique:users',
+                     'username'                 => 'required|alpha_num|unique:users'
         );
     }
 }

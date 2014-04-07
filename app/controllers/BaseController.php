@@ -9,6 +9,8 @@ class BaseController extends Controller {
 	 */
         var $data;
         public function __construct() {
+
+            $this->beforeFilter('csrf', array('on'=>'post'));
          
             $this->logged_in_user  =   Auth::user();
             $this->is_admin        =   "";
