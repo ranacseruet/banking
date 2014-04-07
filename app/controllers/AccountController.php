@@ -1,6 +1,14 @@
 <?php
 
+/**
+ * Account controller
+ *
+ * Responsible for all account related task of user
+ *
+ * @author Eftakhairul Islam <eftakhairul@gmail.com>
+ */
 use Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine;
+
 class AccountController extends BaseController
 {
     
@@ -8,7 +16,6 @@ class AccountController extends BaseController
 
      public function __construct()
      {
-         
          parent::__construct();  
      }
 }

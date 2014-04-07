@@ -1,5 +1,13 @@
 <?php
-use \Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine;
+
+/**
+ * User Controller
+ *
+ * Responsible for user registration, login and logout
+ *
+ * @author Eftakhairul Islam <eftakhairul@gmail.com>
+ */
+use Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine;
 
 class UsersController extends BaseController
 {
@@ -76,18 +84,15 @@ class UsersController extends BaseController
      * @route POST /users/Signin
      * @return mixed
      */
-    public function postSignin() {
-		
-                $user = Doctrine::getRepository("User")->findOneBy(array("email" => Input::get('email')));
-                if($user && Hash::check(Input::get('password'), $user->getPassword())) {
-                    Auth::login(User::find($user->getid()));   
-                    return Redirect::to('users/dashboard')->with('message', 'You are now logged in!');
-                }
-                /*if (Auth::attempt(array('email'=>Input::get('email'), 'password'=> Input::get('password')))) {
-			return Redirect::to('users/dashboard')->with('message', 'You are now logged in!');
-		} */
-                else {
-			return Redirect::to('users/login')
+    public function postSignin()
+    {
+        $user = Doctrine::getRepository("User")->findOneBy(array("email" => Input::get('email')));
+
+        if($user && Hash::check(Input::get('password'), $user->getPassword())) {
+            Auth::login(User::find($user->getid()));
+            return Redirect::to('users/dashboard')->with('message', 'You are now logged in!');
+        } else {
+            return Redirect::to('users/login')
 				->with('message', 'Your username/password combination was incorrect')
 				->withInput();
 		}
@@ -96,15 +101,16 @@ class UsersController extends BaseController
     /**
      * @return mixed
      */
-    public function getDashboard() {
-            $this->data["user"]   = Auth::user();
-            
-            if($this->data["user"]->role_id==1){
-                return Redirect::to("admin/dashboard");
-            }
-            else{
-                $this->layout->content = View::make('users.dashboard',$this->data);
-            }
+    public function getDashboard()
+    {
+        $this->data["user"]   = Auth::user();
+
+        if($this->data["user"]->role_id==1){
+            return Redirect::to("admin/dashboard");
+        }
+        else{
+            $this->layout->content = View::make('users.dashboard',$this->data);
+        }
 	}
 
     /**

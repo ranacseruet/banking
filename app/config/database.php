@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'rrbanking',
+			'database'  => 'banking',
 			'username'  => 'root',
-			'password'  => 'root',
+			'password'  => 'commonrbs',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
