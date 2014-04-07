@@ -1,3 +1,4 @@
+{{ HTML::style('css/auth.css')}}
 {{ Form::open(array('url'=>'users/register', 'class'=>'form-signup')) }}
     <h2 class="form-signup-heading">Please Register</h2>
  

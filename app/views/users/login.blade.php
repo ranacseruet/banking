@@ -1,3 +1,4 @@
+{{ HTML::style('css/auth.css')}}
 {{ Form::open(array('url'=>'users/signin', 'class'=>'form-signin')) }}
 	<h2 class="form-signin-heading">Please Login</h2>
         <div class="form-group">
