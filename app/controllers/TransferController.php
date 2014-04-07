@@ -16,9 +16,17 @@ class TransferController extends \BaseController {
 	 */
 	public function index()
 	{
-            $account  = Doctrine::getRepository("Account")->find(1);
-            $transfers =  $account->getTransactions(); //Doctrine::getRepository("Transaction")->findAll();
-            View::share('transfers', $transfers);
+            $user = Doctrine::getRepository("User")->find(Auth::user()->id);
+            if(!$user) {
+                echo "invalid user";exit;
+                //Redirect::to('users/login')
+                //        ->with('message', 'invalid user information');
+            }
+            $accounts = $user->getAccounts();
+            if(!$accounts) {
+                 $accounts =  new \Doctrine\Common\Collections\ArrayCollection();
+            }
+            View::share('accounts', $accounts);
             $this->layout->content = View::make('transfer.list');
 	}
 
