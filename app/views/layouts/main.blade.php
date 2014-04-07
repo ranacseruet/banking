@@ -23,7 +23,8 @@
                     
                              @if($is_admin)
                                 <li>{{ HTML::link('admin/users', 'Users') }}</li>   
-                                
+                             @else
+                                <li>{{ HTML::link('transfer', 'Transactions') }}</li>
                              @endif
                             <li>{{ HTML::link('users/logout', 'logout') }}</li>
                     @endif

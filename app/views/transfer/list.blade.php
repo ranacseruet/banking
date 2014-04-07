@@ -12,6 +12,7 @@
           <thead>
             <tr>
               <th>#</th>
+              <th>Transaction Date</th>
               <th>Transfer Type</th>
               <th>Summary</th>
               <th>Amount</th>
