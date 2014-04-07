@@ -13,6 +13,13 @@ use Illuminate\Auth\Reminders\RemindableInterface;
  */
 class User extends Eloquent implements UserInterface, RemindableInterface
 {
+
+    CONST ADMIN     = 1;
+    CONST USER      = 2;
+    CONST MANAGER   = 3;
+
+
+
     /**
      * @var integer $id
      *
@@ -91,6 +98,15 @@ class User extends Eloquent implements UserInterface, RemindableInterface
     public function __construct()
     {
         $this->accounts = new ArrayCollection();
+    }
+
+    /**
+     * Return the id
+     * @return $this;
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
