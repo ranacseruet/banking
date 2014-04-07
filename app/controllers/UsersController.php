@@ -12,7 +12,7 @@ class UsersController extends BaseController
     public function __construct()
     {
         parent::__construct();
-		$this->beforeFilter('csrf', array('on'=>'post'));
+
 		$this->beforeFilter('auth', array('only'=>array('getDashboard')));
 
         if (Auth::check()) {
@@ -44,7 +44,7 @@ class UsersController extends BaseController
 
 			$userEntity = new User;
 			$userEntity->setUsername(Input::get('username'));
-			$userEntity->setEmailAddress(Input::get('email'));
+			$userEntity->setEmail(Input::get('email'));
 			$userEntity->setPassword(Hash::make(Input::get('password')));
             $userEntity->setFirstName(Input::get('first_name'));
             $userEntity->setLastName(Input::get('last_name'));
@@ -61,18 +61,23 @@ class UsersController extends BaseController
 	}
 
     /**
+     * Serve only the login page
      *
+     *@route GET /users/Signin
      */
-    public function getLogin() {
-                
+    public function getLogin()
+    {
 		$this->layout->content = View::make('users.login');
 	}
 
     /**
+     * Process the login page
+     *
+     * @route POST /users/Signin
      * @return mixed
      */
     public function postSignin() {
-		if (Auth::attempt(array('email'=>Input::get('email'), 'password'=>Input::get('password')))) {
+		if (Auth::attempt(array('email'=>Input::get('email'), 'password'=> Hash::make(Input::get('password'))))) {
 			return Redirect::to('users/dashboard')->with('message', 'You are now logged in!');
 		} else {
 			return Redirect::to('users/login')
@@ -85,7 +90,7 @@ class UsersController extends BaseController
      * @return mixed
      */
     public function getDashboard() {
-            $this->data["user"]   = Auth::user();
+            $this->data["user"]   = Auth::users();
             
             $bill = new Bill();
             $bill->setName("test");
