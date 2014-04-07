@@ -50,7 +50,7 @@ class UsersController extends BaseController
             $userEntity->setLastName(Input::get('last_name'));
             $userEntity->setCreateDate(new DateTime('now'));
 
-            $userEntity->setRoolId(2);
+            $userEntity->setRoolId(User::USER);
 			Doctrine::persist($userEntity);
             Doctrine::flush();
 
@@ -108,8 +108,22 @@ class UsersController extends BaseController
     /**
      * @return mixed
      */
-    public function getLogout() {
+    public function getLogout()
+    {
 		Auth::logout();
 		return Redirect::to('users/login')->with('message', 'Your are now logged out!');
 	}
+
+    /**
+     * Return list of user
+     *
+     * @route POST /users/Signin
+     * @return mixed
+     */
+    public function getUserlist()
+    {
+        $users  = Doctrine::getRepository("User")->findby(array('roolId' => User::USER));
+        View::share('users', $users);
+        $this->layout->content = View::make('users.list');
+    }
 }
