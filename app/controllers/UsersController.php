@@ -79,7 +79,7 @@ class UsersController extends BaseController
     public function postSignin() {
 		
                 $user = Doctrine::getRepository("User")->findOneBy(array("email" => Input::get('email')));
-                if(Hash::check(Input::get('password'), $user->getPassword())) {
+                if($user && Hash::check(Input::get('password'), $user->getPassword())) {
                     Auth::login(User::find($user->getid()));   
                     return Redirect::to('users/dashboard')->with('message', 'You are now logged in!');
                 }
