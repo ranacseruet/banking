@@ -7,6 +7,9 @@
  */
 class Card
 {
+    const CREDIT = 'cr';
+    const DEBIT  = 'dr';
+
     /**
      * @var integer $id
      *
@@ -229,5 +232,30 @@ class Card
     public function getCartNo()
     {
         return $this->cartNo;
+    }
+
+    /**
+     * Return all statues / enum type
+     *
+     * @return array
+     */
+    public static function getALLStatuses()
+    {
+        return array(self::CREDIT => 'Credit',
+                     self::DEBIT  => 'Debit');
+    }
+
+    /**
+     * Return all rules for validation
+     *
+     * @return array
+     */
+    public static function getRules()
+    {
+        return array('card_no'     => 'required|between:12,16|unique:accounts',
+                     'pin_no'      => 'required',
+                     'expire_date' => 'required',
+                     'issue_date'  => 'required'
+        );
     }
 }
