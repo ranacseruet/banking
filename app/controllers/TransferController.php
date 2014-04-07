@@ -16,10 +16,8 @@ class TransferController extends \BaseController {
 	 */
 	public function index()
 	{
-            //$transfers = new \Doctrine\Common\Collections\ArrayCollection();
-            //$transfers->add((new Transaction())->setAmount(10));
-            //$transfers->add((new Transaction())->setAmount(20));
-            $transfers = Doctrine::getRepository("Transaction")->findAll();
+            $account  = Doctrine::getRepository("Account")->find(1);
+            $transfers =  $account->getTransactions(); //Doctrine::getRepository("Transaction")->findAll();
             View::share('transfers', $transfers);
             $this->layout->content = View::make('transfer.list');
 	}
@@ -31,7 +29,22 @@ class TransferController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+            /**
+             * @var Account Description
+             */
+            
+            $user = Doctrine::getRepository("User")->find(1);
+            $accounts = $user->getAccounts();
+            $from = array(0 => "Select An Account");
+            $to = array(0 => "Select An Account");
+            foreach($accounts as $account) {
+                $from[$account->getId()] = $account->getId();
+                $to[$account->getId()] = $account->getId();
+            }
+            View::share('from', $from);
+            View::share('to', $to);
+            
+            $this->layout->content = View::make('transfer.create');
 	}
 
 	/**
@@ -41,7 +54,43 @@ class TransferController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+            
+            
+		// validate
+		// read more on validation at http://laravel.com/docs/validation
+		$rules = array(
+			'from_account'       => 'required',
+			'to_account'      => 'required',
+			'amount' => 'required|numeric'
+		);
+		$validator = Validator::make(Input::all(), $rules);
+
+		// process the login
+		if ($validator->fails()) {
+			return Redirect::to('transfer/create')
+				->withErrors($validator)
+				->withInput(Input::except('password'));
+		} else {
+			// store
+			$transaction = new Transaction();
+			$transaction->setAccount(Doctrine::getRepository("Account")->find(Input::get('from_account')));
+			$transaction->setAmount(Input::get('amount'));
+			$transaction->setType("D");
+                        Doctrine::persist($transaction);
+                        
+                        $transaction = new Transaction();
+			$transaction->setAccount(Doctrine::getRepository("Account")->find(Input::get('to_account')));
+			$transaction->setAmount(Input::get('amount'));
+			$transaction->setType("C");
+                        Doctrine::persist($transaction);
+                        
+                        Doctrine::flush();
+                        
+			// redirect
+			Session::flash('message', 'Payment completed Successfully!');
+			return Redirect::to('transfer');
+		}
+           
 	}
 
 	/**
