@@ -1,12 +1,9 @@
-<div class="panel panel-default">
+
   <!-- Default panel contents -->
-  <div class="panel-heading">Panel heading</div>
-  <div class="panel-body">
-    <p>List of transfer made on your account:</p>
-  </div>
+  <h1>Transactions made On Your Accounts:</h1>
   <a class="btn btn-success" href="transfer/create">Make A New Transfer</a>
   @foreach ($accounts as $account)
-    <h2>Account: {{ $account->getAccountNo() }}</h2>
+    <h2>Account: {{ $account->getAccountNo() }} ({{ $account->getType() }})</h2>
     <!-- Table -->
     <table class="table">
           <thead>
@@ -31,4 +28,3 @@
           </tbody>
     </table>
   @endforeach  
-</div>
