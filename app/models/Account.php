@@ -262,8 +262,8 @@ class Account
      */
     public static function getRules()
     {
-        return array('account_no'    => 'required|between:12,16|unique:accounts',
-                     'interest_rate' => 'required',
+        return array('account_no'    => 'required|numeric|between:12,16|unique:accounts',
+                     'interest_rate' => 'required|numeric',
                      'type'          => 'required'
         );
     }
