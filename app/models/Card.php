@@ -235,11 +235,11 @@ class Card
     }
 
     /**
-     * Return all statues / enum type
+     * Return all type / enum type
      *
      * @return array
      */
-    public static function getALLStatuses()
+    public static function getAllType()
     {
         return array(self::CREDIT => 'Credit',
                      self::DEBIT  => 'Debit');
