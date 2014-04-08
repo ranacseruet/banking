@@ -89,8 +89,7 @@ class Account
      * @OneToMany(targetEntity="Transaction", mappedBy="account")
      */
     private $transactions;
-
-
+    
     public function __construct()
     {
         $this->cards = new ArrayCollection();

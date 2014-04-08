@@ -15,5 +15,6 @@ Route::get('/', 'HomeController@home');
 Route::controller('users', 'UsersController');
 Route::controller('admin', 'AdminController');
 Route::resource('transfer', 'TransferController');
+Route::resource('payee', 'PayeeController');
 Route::controller('account', 'AccountController');
 Route::get('account/create/id/{id}', 'AccountController@getCreate');

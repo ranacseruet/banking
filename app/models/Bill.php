@@ -24,16 +24,15 @@ class Bill
     private $name;
     
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection
-     * @ManyToMany(targetEntity="Account", inversedBy="payees")
-     * @JoinTable(name="account_payee")
-     **/
-    //private $accounts;
+     * @var ArrayCollection $payers
+     * @OneToMany(targetEntity="Payee", mappedBy="bill")
+     */
+    private $payers;
     
     
     public function __construct() 
     {
-        ;
+        $this->payers = new Doctrine\Common\Collections\ArrayCollection();
     }
 
         /**
@@ -68,9 +67,8 @@ class Bill
         return $this->name;
     }
 
-    public function getAccounts() 
-    {
-        
+    public function getPayers() {
+        return $this->payers;
     }
 
 }

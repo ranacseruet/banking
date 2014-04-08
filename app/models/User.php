@@ -48,7 +48,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface
      *
      * @Column(name="username", type="string", length=30, nullable=false, unique=true)
      */
-    public $username;
+    private $username;
 
     /**
      * @var string $password
@@ -107,11 +107,19 @@ class User extends Eloquent implements UserInterface, RemindableInterface
      * @ORM\Column(name="update_date", type="datetime", nullable=false)
      */
     private $updateDate;
+    
+    /**
+     * @var ArrayCollection $payees
+     * @OneToMany(targetEntity="Payee", mappedBy="user")
+     * @var Payee
+     */
+    private $payees;
 
 
     public function __construct()
     {
         $this->accounts = new ArrayCollection();
+        $this->payees   = new ArrayCollection();
     }
 
     /**
@@ -315,18 +323,22 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	 */
 	public function getReminderEmail()
 	{
-		return $this->email;
+                return $this->email;
 	}
+        
+        public function getPayees() 
+        {
+            return $this->payees;
+        }
 
-
-    public static function getRules()
-    {
-        return array('first_name'               => 'required|alpha',
-                     'last_name'                => 'required|alpha',
-                     'password'                 => 'required|alpha_num|between:6,12|confirmed',
-		             'password_confirmation'    => 'required|alpha_num|between:6,12',
-                     'email'                    => 'required|email|unique:users',
-                     'username'                 => 'required|alpha_num|unique:users'
-        );
-    }
+        public static function getRules()
+        {
+            return array('first_name'               => 'required|alpha',
+                         'last_name'                => 'required|alpha',
+                         'password'                 => 'required|alpha_num|between:6,12|confirmed',
+                                 'password_confirmation'    => 'required|alpha_num|between:6,12',
+                         'email'                    => 'required|email|unique:users',
+                         'username'                 => 'required|alpha_num|unique:users'
+            );
+        }
 }
