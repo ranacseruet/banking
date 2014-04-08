@@ -32,9 +32,9 @@ class CardController extends BaseController
      */
     public function getCreate($id)
     {
-        $this->data["account_id"] = $id;
+        View::share('account_id', $id);
         View::share('type', Card::getAllType());
-        $this->layout->content = View::make('account.create', $this->data);
+        $this->layout->content = View::make('card.create');
     }
 
 
@@ -65,7 +65,7 @@ class CardController extends BaseController
             //TODO route has to updated
 			return Redirect::to('users/login')->with('message', 'Thanks for registering!');
 		} else {
-			return Redirect::to('card/create/id' . Input::get('account_id'))->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
+			return Redirect::to('card/create/' . Input::get('account_id'))->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
 		}
     }
 }
