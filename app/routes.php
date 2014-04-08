@@ -20,3 +20,7 @@ Route::controller('account', 'AccountController');
 Route::controller('card', 'CardController');
 Route::get('account/create/id/{id}', 'AccountController@getCreate');
 Route::get('card/create/id/{id}', 'CardController@getCreate');
+
+Route::controller('payment', 'PaymentController');
+Route::get('payment/', 'PaymentController@index');
+

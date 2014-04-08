@@ -1,27 +1,7 @@
 <?php
 
-class PayeeController extends \BaseController {
+class PayeeController extends UserBaseController {
     
-        /**
-        * The layout that should be used for responses.
-        */
-        protected $layout = 'layouts.main';
-        
-        /**
-         * @var User 
-         */
-        private $user;
-        
-        public function __construct() 
-        {
-            parent::__construct();
-            if(!Auth::check()) {
-                return Redirect::to('users/login')
-                        ->with('message', 'Please login first');
-            }
-            $this->user = Doctrine::getRepository("User")->find(Auth::user()->id);
-        }
-
 	/**
 	 * Display a listing of the resource.
 	 *

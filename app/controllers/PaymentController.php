@@ -1,71 +1,60 @@
 <?php
 
-use Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine;
+class PaymentController extends \UserBaseController {
 
-class TransferController extends UserBaseController 
-{
-        /**
+	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
 	public function index()
-	{   
-            $accounts = $this->user->getAccounts();
-            if(!$accounts) {
-                 $accounts =  new \Doctrine\Common\Collections\ArrayCollection();
-            }
-            View::share('accounts', $accounts);
-            $this->layout->content = View::make('transfer.list');
-	}
-
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
 	{
-            $accounts = $this->user->getAccounts();
-            $from = array(0 => "Select An Account");
-            $to = array(0 => "Select An Account");
-            foreach($accounts as $account) {
-                $from[$account->getId()] = $account->getAccountNo()."(".$account->getBalance().")";
-                $to[$account->getId()] = $account->getAccountNo()."(".$account->getBalance().")";
+		$this->layout->content = View::make('payment.list');
+	}
+        
+        public function getBill()
+        {
+            $payees = $this->user->getPayees();
+            $from = array();
+            foreach($this->user->getAccounts() as $account) {
+                if($account->getType() == Account::CHECKING || $account->getType() == Account::SAVING) {
+                    $from[$account->getId()] = $account->getAccountNo()."(".$account->getBalance().")";
+                }
             }
-            View::share('from', $from);
-            View::share('to', $to);
+            $to = array(0 => "Select An Payee");
             
-            $this->layout->content = View::make('transfer.create');
-	}
-
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		// validate
+            foreach($payees as $payee) {
+                $to[$payee->getId()] = $payee->getBill()->getName()."(".$payee->getAccountNo().")";
+            }
+            View::share('to', $to);
+            View::share('from', $from);
+            $this->layout->content = View::make('payment.bill');
+        }
+        
+        public function postBill()
+        {
+                // validate
 		// read more on validation at http://laravel.com/docs/validation
 		$rules = array(
-			'from_account'       => 'required|different:to_account',
-			'to_account'      => 'required|different:from_account',
-			'amount'        => 'required|numeric|min:2',
-                        'description' => 'required'
+			'account'       => 'required',
+			'payee'      => 'required',
+			'amount'        => 'required|numeric|min:2'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 
 		// process the login
 		if ($validator->fails()) {
-			return Redirect::to('transfer/create')
+			return Redirect::to('payment/bill')
 				->withErrors($validator);
 		} else {
 			// store
-                        $fromAccount = Doctrine::getRepository("Account")->find(Input::get('from_account'));
-			$toAccount   = Doctrine::getRepository("Account")->find(Input::get('to_account'));
+                        $fromAccount = Doctrine::getRepository("Account")->find(Input::get('account'));
+			$payee = Doctrine::getRepository("Payee")->find(Input::get('payee'));
+                        
+                        $toAccount   = $payee->getBill()->getAccount();
+                        
                         if($fromAccount->getBalance() < Input::get('amount')) {
-                            return Redirect::to('transfer/create')
+                            return Redirect::to('payment/bill')
 				->withErrors("You don't have enough balance");
                         }
                         
@@ -89,7 +78,26 @@ class TransferController extends UserBaseController
 			Session::flash('message', 'Payment completed Successfully!');
 			return Redirect::to('transfer');
 		}
-           
+        }
+
+	/**
+	 * Show the form for creating a new resource.
+	 *
+	 * @return Response
+	 */
+	public function create()
+	{
+		$this->layout->content = View::make('payment.create');
+	}
+
+	/**
+	 * Store a newly created resource in storage.
+	 *
+	 * @return Response
+	 */
+	public function store()
+	{
+		//
 	}
 
 	/**
