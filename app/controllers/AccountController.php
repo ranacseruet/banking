@@ -28,7 +28,7 @@ class AccountController extends BaseController
     /**
      * Serve the accout creation page
      *
-     *@route GET /account/create/:id
+     *@route GET /account/create/id/:id
      */
     public function getCreate($id)
     {
@@ -50,11 +50,12 @@ class AccountController extends BaseController
         $this->layout->content = View::make('account.create', $this->data);
     }
 
-    /**
-     * Process account creation
-     *
-     *@route post /account/processaccount
-     */
+
+   /**
+    * Process account creation
+    *
+    *@route post /account/processaccount
+    */
     public function postProcessaccount()
     {
         $validator = Validator::make(Input::all(), Account::getRules());

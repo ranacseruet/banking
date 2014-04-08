@@ -3,9 +3,9 @@
 use Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine;
 
 /**
- * Account controller
+ * Card controller
  *
- * Responsible for all account related task of user
+ * Responsible for all card related task of user
  *
  * @author Eftakhairul Islam <eftakhairul@gmail.com>
  */
@@ -28,13 +28,13 @@ class CardController extends BaseController
     /**
      * Serve the accout creation page
      *
-     *@route GET /card/create/:id
+     * @route GET /card/create/id/:id
      */
     public function getCreate($id)
     {
-        $this->data["account_id"] = $id;
-        View::share('type', Account::getALLStatuses());
-        $this->layout->content = View::make('account.create', $this->data);
+        View::share('account_id', $id);
+        View::share('type', Card::getAllType());
+        $this->layout->content = View::make('card.create');
     }
 
 
@@ -45,26 +45,27 @@ class CardController extends BaseController
      */
     public function postProcesscreate()
     {
-        $validator = Validator::make(Input::all(), Account::getRules());
+        $validator = Validator::make(Input::all(), Card::getRules());
 
 		if ($validator->passes()) {
 
-            $user          = Doctrine::getRepository("User")->findOneBy(array("id" => Input::get('user_id')));
-			$accountEntity = new Account;
-            $accountEntity->setUser($user);
-            $accountEntity->settype(Input::get('type'));
-            $accountEntity->setAccountNo(Input::get('account_no'));
-            $accountEntity->setInterestRate(Input::get('interest_rate'));
-            $accountEntity->setIsActive(true);
-            $accountEntity->setCreateDate(new DateTime('now'));
+            $account    = Doctrine::getRepository("Account")->findOneBy(array("id" => Input::get('account_id')));
+			$cardEntity = new Card();
+            $cardEntity->setAccount($account);
+            $cardEntity->settype(Input::get('type'));
+            $cardEntity->setCartNo(Input::get('card_no'));
+            $cardEntity->setExpireDate(new DateTime(strtotime(Input::get('expire_date'))));
+            $cardEntity->setIssueDate(new DateTime(strtotime(Input::get('issue_date'))));
+            $cardEntity->setPinNo(new DateTime(strtotime(Input::get('pin_no'))));
+            $cardEntity->setCreateDate(new DateTime('now'));
 
-			Doctrine::persist($accountEntity);
+			Doctrine::persist($cardEntity);
             Doctrine::flush();
 
             //TODO route has to updated
 			return Redirect::to('users/login')->with('message', 'Thanks for registering!');
 		} else {
-			return Redirect::to('account/create/' . Input::get('user_id'))->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
+			return Redirect::to('card/create/' . Input::get('account_id'))->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
 		}
     }
 }

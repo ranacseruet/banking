@@ -9,7 +9,8 @@ use Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine;
  *
  * @author Eftakhairul Islam <eftakhairul@gmail.com>
  */
-class AdminController extends BaseController{
+class AdminController extends BaseController
+{
     
      protected $layout = "layouts.main";
 
