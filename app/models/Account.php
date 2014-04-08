@@ -55,7 +55,7 @@ class Account
    /**
     * @var string $user
     *
-    * @ManyToOne(targetEntity="User", inversedBy="accounts")
+    * @ManyToOne(targetEntity="User", inversedBy="accounts", cascade={"persist", "remove"})
     * @JoinColumn(name="user_id", referencedColumnName="id")
     */
     private $user;
@@ -253,6 +253,22 @@ class Account
         return array('saving'      => self::SAVING,
                      'investment'  => self::INVESTMENT,
                      'checking'    => self::CHECKING );
+    }
+    
+    public function getBalance()
+    {
+        $bal = 0;
+        if($this->transactions->count() > 0 ) {
+            foreach($this->transactions as $transaction) {
+                if($transaction->getType() == Transaction::CREDIT) {
+                    $bal += $transaction->getAmount();
+                }
+                else {
+                    $bal -= $transaction->getAmount();
+                }
+            }
+        }
+        return $bal;
     }
 
     /**

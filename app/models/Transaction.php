@@ -7,6 +7,9 @@
  */
 class Transaction
 {
+    CONST DEBIT     = 'D';
+    CONST CREDIT   = 'C';
+    
     /**
      * @var integer $id
      *
@@ -47,7 +50,7 @@ class Transaction
      /**
      * @var $account;
      *
-     * @ManyToOne(targetEntity="Account", inversedBy="transactions")
+     * @ManyToOne(targetEntity="Account", inversedBy="transactions", cascade={"persist", "remove"})
      * @JoinColumn(name="account_id", referencedColumnName="id")
      **/
     private $account;
