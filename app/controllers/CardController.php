@@ -49,16 +49,17 @@ class CardController extends BaseController
 
 		if ($validator->passes()) {
 
-            $account    = Doctrine::getRepository("Account")->findOneBy(array("id" => Input::get('account_id')));
 			$cardEntity = new Card();
-            $cardEntity->setAccount($account);
+
+
             $cardEntity->settype(Input::get('type'));
             $cardEntity->setCartNo(Input::get('card_no'));
-            $cardEntity->setExpireDate(new DateTime(strtotime(Input::get('expire_date'))));
-            $cardEntity->setIssueDate(new DateTime(strtotime(Input::get('issue_date'))));
-            $cardEntity->setPinNo(new DateTime(strtotime(Input::get('pin_no'))));
-            $cardEntity->setCreateDate(new DateTime('now'));
-
+            $cardEntity->setExpireDate(new \DateTime(Input::get('expire_date')));
+            $cardEntity->setIssueDate(new \DateTime(Input::get('issue_date')));
+            $cardEntity->setPinNo(Input::get('pin_no'));
+            $cardEntity->setCreateDate(new \DateTime('now'));
+            $account    = Doctrine::getRepository("Account")->findOneBy(array('id' => Input::get('account_id')));
+            $cardEntity->setAccount($account);
 			Doctrine::persist($cardEntity);
             Doctrine::flush();
 

@@ -282,5 +282,4 @@ class Account
                      'type'          => 'required'
         );
     }
-    
 }

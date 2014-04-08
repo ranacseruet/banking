@@ -252,11 +252,11 @@ class Card
      */
     public static function getRules()
     {
-        return array('card_no'          => 'required|numeric|between:12,16|unique:cards',
-                     'pin_no'           => 'required|digits:4|confirmed',
-		             'pin_confirmation' => 'required|digits:4',
-                     'expire_date'      => 'required|date',
-                     'issue_date'       => 'required|date'
+        return array('card_no'              => 'required|numeric|min:12|unique:cards',
+                     'pin_no'               => 'required|digits:4|confirmed',
+		             'pin_no_confirmation'  => 'required|digits:4',
+                     'expire_date'          => 'required|date',
+                     'issue_date'           => 'required|date'
         );
     }
 }
