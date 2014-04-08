@@ -29,6 +29,16 @@ class Bill
      */
     private $payers;
     
+    /**
+     * @var Account
+     *
+     * @OneToOne(targetEntity="Account")
+     * @JoinColumns({
+     *   @JoinColumn(name="account_id", referencedColumnName="id", onDelete="CASCADE")
+     * })
+     */
+    private $account;
+    
     
     public function __construct() 
     {
@@ -69,6 +79,10 @@ class Bill
 
     public function getPayers() {
         return $this->payers;
+    }
+    
+    public function getAccount() {
+        return $this->account;
     }
 
 }
