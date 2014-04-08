@@ -27,6 +27,7 @@
                                 <li>{{ HTML::link('admin/users', 'Users') }}</li>   
                              @else
                                 <li>{{ HTML::link('transfer', 'Transactions') }}</li>
+                                <li>{{ HTML::link('payee', 'Payee Management') }}</li>
                              @endif
                             <li>{{ HTML::link('users/logout', 'logout') }}</li>
                     @endif

@@ -135,7 +135,9 @@ class PayeeController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+            Doctrine::remove(Doctrine::getPartialReference("Payee", $id));
+            Doctrine::flush();
+            return Redirect::to("payee");
 	}
 
 }
