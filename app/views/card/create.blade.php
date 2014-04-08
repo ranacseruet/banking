@@ -25,8 +25,8 @@
 
 
     <div class="form-group">
-		{{ Form::label('pin_confirmation', 'Confirmed Pin') }}
-		{{ Form::password('pin_confirmation',  array('class' => 'form-control', 'id' => 'pin_confirmation')) }}
+		{{ Form::label('pin_no_confirmation', 'Confirmed Pin') }}
+		{{ Form::password('pin_no_confirmation',  array('class' => 'form-control', 'id' => 'pin_no_confirmation')) }}
 	</div>
 
      <div class="form-group">
