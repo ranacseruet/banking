@@ -235,11 +235,11 @@ class Card
     }
 
     /**
-     * Return all statues / enum type
+     * Return all type / enum type
      *
      * @return array
      */
-    public static function getALLStatuses()
+    public static function getAllType()
     {
         return array(self::CREDIT => 'Credit',
                      self::DEBIT  => 'Debit');
@@ -252,10 +252,11 @@ class Card
      */
     public static function getRules()
     {
-        return array('card_no'     => 'required|between:12,16|unique:accounts',
-                     'pin_no'      => 'required',
-                     'expire_date' => 'required',
-                     'issue_date'  => 'required'
+        return array('card_no'          => 'required|numeric|between:12,16|unique:accounts',
+                     'pin_no'           => 'required|digits:4|confirmed',
+		             'pin_confirmation' => 'required|digits:4',
+                     'expire_date'      => 'required|date',
+                     'issue_date'       => 'required|date'
         );
     }
 }
