@@ -1,7 +1,8 @@
 
   <!-- Default panel contents -->
   <h1>Transactions Summary:</h1>
-  <a class="btn btn-success" href="transfer/create">Make A New Transfer</a>
+  <a class="btn btn-success" href="transfer/create">New Transaction</a>
+  <a class="btn btn-success" href="transfer/wire/edit">New Wire Transfer</a>
   @foreach ($accounts as $account)
     <h2>Account: {{ HTML::link('transfer/'.$account->getId(), $account->getAccountNo(), array()) }} ({{ $account->getType() }})</h2>
     <!-- Table -->
