@@ -25,14 +25,15 @@
 </table>
 <br/>
 <br/>
+<h4>Cards</h4>
 <!-- Table -->
 <table class="table">
       <tbody>
           @foreach ($account->getCards() as $card)
           <tr>
               <td>Master Card - {{$card->getCardNo()}}</td>
-              <td>Expire {{$card->getExpireDateToString()}}</td>
-              <td>{{$card->getTypeToString()}}</td>
+              <td>Expire On {{$card->getExpireDateToString()}}</td>
+              <td>{{$card->getTypeToString()}} Card</td>
               <td><a href="" class="btn btn-primary">Change Pin</a></td>
           </tr>
           @endforeach
