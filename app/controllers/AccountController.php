@@ -82,8 +82,12 @@ class AccountController extends UserBaseController
             $accountEntity->setIsActive(true);
             $accountEntity->setCreateDate(new DateTime('now'));
 
-			Doctrine::persist($accountEntity);
-            Doctrine::flush();
+            try{
+                Doctrine::persist($accountEntity);
+                Doctrine::flush();
+            } catch(\Exception $e) {
+                return Redirect::to('account/create/' . Input::get('user_id'))->with('message', 'Something went wrong')->withErrors($validator)->withInput();
+            }
 
             //TODO route has to updated
 			return Redirect::to('users/login')->with('message', 'Thanks for registering!');

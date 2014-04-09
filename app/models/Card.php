@@ -43,7 +43,7 @@ class Card
     /**
      * @var \DateTime $expireDate
      *
-     * @ORM\Column(type="datetime")
+     * @Column(name="expire_date", type="datetime")
      */
     private $expireDate;
 
@@ -51,7 +51,7 @@ class Card
     /**
      * @var \DateTime $issueDate
      *
-     * @ORM\Column(type="datetime")
+     * @Column(name="issue_date", type="datetime")
      */
     private $issueDate;
 
@@ -68,17 +68,22 @@ class Card
     /**
      * @var \DateTime $createDate
      *
-     * @ORM\Column(type="datetime")
+     * @Column(name="create_date", type="datetime")
      */
     private $createDate;
 
     /**
      * @var \DateTime $modifyDate
      *
-     * @ORM\Column(type="datetime")
+     * @Column(name="update_date", type="datetime")
      */
     private $updateDate;
 
+
+    public function __construct()
+    {
+        $this->updateDate = new DateTime('now');
+    }
     
     /**
      * Get id

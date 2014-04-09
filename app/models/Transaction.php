@@ -43,7 +43,7 @@ class Transaction
      /**
      * @var string $type debit|credit
      *
-     * @Column(name="createTime", type="datetime")
+     * @Column(name="create_time", type="datetime")
      */
     private $createTime;
     
