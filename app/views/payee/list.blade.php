@@ -23,7 +23,7 @@
                 <td>
                     {{ Form::open(array('url' => 'payee/'.$payee->getId())) }}
                             {{ Form::hidden('_method', 'DELETE') }}
-                            {{ HTML::link('#', 'Make A Payment', array('class' => 'btn btn-success')) }} 
+                            {{ HTML::link('payment/bill', 'Make A Payment', array('class' => 'btn btn-success')) }} 
                             {{ Form::submit('Delete this Payee', array('class' => 'btn btn-danger')) }}
                     {{ Form::close() }}
                 </td>

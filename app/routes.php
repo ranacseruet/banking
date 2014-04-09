@@ -24,3 +24,5 @@ Route::get('account/index/id/{id}', 'AccountController@getIndex');
 Route::controller('payment', 'PaymentController');
 Route::get('payment/', 'PaymentController@index');
 
+Route::resource('billing-accounts', 'BillingAccountController');
+

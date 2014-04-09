@@ -32,17 +32,25 @@ class Bill
     /**
      * @var Account
      *
-     * @OneToOne(targetEntity="Account")
+     * @OneToOne(targetEntity="Account", inversedBy="billingAccount")
      * @JoinColumns({
      *   @JoinColumn(name="account_id", referencedColumnName="id", onDelete="CASCADE")
      * })
      */
     private $account;
     
+    /**
+     * @var DateTime $type
+     *
+     * @Column(name="createTime", type="datetime")
+     */
+    private $createTime;
+    
     
     public function __construct() 
     {
         $this->payers = new Doctrine\Common\Collections\ArrayCollection();
+        $this->createTime = new DateTime();
     }
 
         /**
@@ -84,5 +92,17 @@ class Bill
     public function getAccount() {
         return $this->account;
     }
+    public function setAccount(Account $account) {
+        $this->account = $account;
+        return $this;
+    }
 
+    public function getCreateTime() {
+        return $this->createTime;
+    }
+
+    public function setCreateTime(DateTime $createTime) {
+        $this->createTime = $createTime;
+        return $this;
+    }
 }
