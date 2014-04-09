@@ -72,7 +72,7 @@ class Account
     /**
      * @var \DateTime $createDate
      *
-     * @ORM\Column(name="create_date", type="date", nullable=false)
+     * @ORM\Column(name="create_date", type="datetime", nullable=false)
      */
     private $createDate;
 
@@ -99,7 +99,7 @@ class Account
     
     public function __construct()
     {
-        $this->cards = new ArrayCollection();
+        $this->cards        = new ArrayCollection();
         $this->transactions = new ArrayCollection();
     }
      /**
@@ -237,6 +237,26 @@ class Account
     {
         return $this->user;
     }
+
+    /**
+     * @param string $cards
+     * @return $this
+     */
+    public function setCards($cards)
+    {
+        $this->cards = $cards;
+        return $this;
+    }
+
+    /**
+     * Return the array collection of card
+     *
+     * @return string
+     */
+    public function getCards()
+    {
+        return $this->cards;
+    }
     
     public function getTransactions() 
     {
@@ -268,7 +288,7 @@ class Account
     public function getBalance()
     {
         $bal = 0;
-        if($this->transactions->count() > 0 ) {
+        if ($this->transactions->count() > 0 ) {
             foreach($this->transactions as $transaction) {
                 if($transaction->getType() == Transaction::CREDIT) {
                     $bal += $transaction->getAmount();

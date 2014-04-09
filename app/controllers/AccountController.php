@@ -26,9 +26,21 @@ class AccountController extends UserBaseController
      }
 
     /**
+     * Serve
+     *
+     * @route GET /account/index/id/:id
+     */
+    public function getIndex($id)
+    {
+        $account                = Doctrine::getRepository("Account")->find($id);
+        $this->data['account']  = $account;
+        $this->layout->content  = View::make('account.index', $this->data);
+    }
+
+    /**
      * Serve the accout creation page
      *
-     *@route GET /account/create/id/:id
+     * @route GET /account/create/id/:id
      */
     public function getCreate($id)
     {

@@ -7,7 +7,7 @@ class TransferController extends UserBaseController
         /**
 	 * Display a listing of the resource.
 	 *
-	 * @return Response
+	 * @return \Response
 	 */
 	public function index()
 	{   
@@ -15,6 +15,7 @@ class TransferController extends UserBaseController
             if(!$accounts) {
                  $accounts =  new \Doctrine\Common\Collections\ArrayCollection();
             }
+
             View::share('accounts', $accounts);
             $this->layout->content = View::make('transfer.list');
 	}
@@ -29,10 +30,12 @@ class TransferController extends UserBaseController
             $accounts = $this->user->getAccounts();
             $from = array(0 => "Select An Account");
             $to = array(0 => "Select An Account");
+
             foreach($accounts as $account) {
                 $from[$account->getId()] = $account->getAccountNo()."(".$account->getBalance().")";
                 $to[$account->getId()] = $account->getAccountNo()."(".$account->getBalance().")";
             }
+
             View::share('from', $from);
             View::share('to', $to);
             

@@ -41,7 +41,7 @@ class CardController extends BaseController
     /**
      * Process account creation
      *
-     *@route post /card/processcreate
+     * @route post /card/processcreate
      */
     public function postProcesscreate()
     {
@@ -49,17 +49,51 @@ class CardController extends BaseController
 
 		if ($validator->passes()) {
 
+            $account    = Doctrine::getRepository("Account")->find(Input::get('account_id'));
 			$cardEntity = new Card();
-
-
             $cardEntity->settype(Input::get('type'));
-            $cardEntity->setCartNo(Input::get('card_no'));
+            $cardEntity->setCardNo(Input::get('card_no'));
             $cardEntity->setExpireDate(new \DateTime(Input::get('expire_date')));
             $cardEntity->setIssueDate(new \DateTime(Input::get('issue_date')));
             $cardEntity->setPinNo(Input::get('pin_no'));
             $cardEntity->setCreateDate(new \DateTime('now'));
-            $account    = Doctrine::getRepository("Account")->findOneBy(array('id' => Input::get('account_id')));
             $cardEntity->setAccount($account);
+			Doctrine::persist($cardEntity);
+            Doctrine::flush();
+
+            //TODO route has to updated
+			return Redirect::to('users/login')->with('message', 'Thanks for registering!');
+		} else {
+			return Redirect::to('card/create/' . Input::get('account_id'))->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
+		}
+    }
+
+    /**
+     * show the Pin
+     *
+     * @route post /card/changepin/id/{:id}
+     */
+    public function getChangepin($id)
+    {
+        View::share('card_id', $id);
+        $this->layout->content = View::make('card.changepin');
+    }
+
+
+    /**
+     * show the Pin
+     *
+     * @route post /card/processchangepin
+     */
+    public function postProcesschangepin()
+    {
+        $validator = Validator::make(Input::all(), Card::getRulesForChangePin());
+
+        if ($validator->passes()) {
+
+			$cardEntity = Doctrine::getRepository("Card")->find(Input::get('card_id'));
+            $cardEntity->setPinNo(Input::get('pin_no'));
+            $cardEntity->setUpdateDate(new \DateTime('now'));
 			Doctrine::persist($cardEntity);
             Doctrine::flush();
 
