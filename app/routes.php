@@ -18,11 +18,16 @@ Route::resource('transfer', 'TransferController');
 Route::resource('payee', 'PayeeController');
 Route::controller('account', 'AccountController');
 Route::controller('card', 'CardController');
+Route::resource('billing-accounts', 'BillingAccountController');
+
+//Dynamic Route
 Route::get('account/create/id/{id}', 'AccountController@getCreate');
 Route::get('card/create/id/{id}', 'CardController@getCreate');
 Route::get('account/index/id/{id}', 'AccountController@getIndex');
 Route::controller('payment', 'PaymentController');
 Route::get('payment/', 'PaymentController@index');
+Route::get('admin/userdetails/id/{id}', 'AdminController@getDetails');
+Route::get('account/withdraw/id/{id}', 'AccountController@getWithdraw');
+Route::get('account/deposit/id/{id}', 'AccountController@getDeposit');
 
-Route::resource('billing-accounts', 'BillingAccountController');
 

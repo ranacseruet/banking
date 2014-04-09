@@ -95,4 +95,22 @@ class AccountController extends UserBaseController
 			return Redirect::to('account/create/' . Input::get('user_id'))->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
 		}
     }
+
+   /**
+    * Process account creation
+    *
+    *@route GET /account/withdraw/id/:id
+    */
+    public function getWithdraw($id)
+    {
+    }
+
+    /**
+    * Process account creation
+    *
+    *@route GET /account/deposit/id/:id
+    */
+    public function getDeposit($id)
+    {
+    }
 }
