@@ -90,27 +90,12 @@ class UsersController extends BaseController
 
         if($user && Hash::check(Input::get('password'), $user->getPassword())) {
             Auth::login(User::find($user->getid()));
-            return Redirect::to('users/dashboard')->with('message', 'You are now logged in!');
+
+            return Redirect::to('home/dashboard')->with('message', 'You are now logged in!');
         } else {
-            return Redirect::to('users/login')
-				->with('message', 'Your username/password combination was incorrect')
-				->withInput();
+            return Redirect::to('users/login')->with('message', 'Your username/password combination was incorrect')
+				                              ->withInput();
 		}
-	}
-
-    /**
-     * @return mixed
-     */
-    public function getDashboard()
-    {
-        $this->data["user"]   = Auth::user();
-
-        if($this->data["user"]->role_id==1){
-            return Redirect::to("admin/dashboard");
-        }
-        else{
-            $this->layout->content = View::make('users.dashboard',$this->data);
-        }
 	}
 
     /**
