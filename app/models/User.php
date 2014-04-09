@@ -95,14 +95,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface
     /**
      * @var \DateTime $createDate
      *
-     * @ORM\Column(name="create_date", type="datetime", nullable=false)
+     * @Column(name="create_date", type="datetime", nullable=false)
      */
     private $createDate;
 
     /**
      * @var \DateTime $modifyDate
      *
-     * @ORM\Column(name="update_date", type="datetime", nullable=false)
+     * @Column(name="update_date", type="datetime", nullable=false)
      */
     private $updateDate;
     
@@ -116,8 +116,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 
     public function __construct()
     {
-        $this->accounts = new ArrayCollection();
-        $this->payees   = new ArrayCollection();
+        $this->accounts   = new ArrayCollection();
+        $this->payees     = new ArrayCollection();
+        $this->updateDate = new DateTime('now');
     }
 
     /**

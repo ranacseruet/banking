@@ -72,14 +72,15 @@ class Account
     /**
      * @var \DateTime $createDate
      *
-     * @ORM\Column(name="create_date", type="datetime", nullable=false)
+     * @Column(name="create_date", type="datetime", nullable=false)
      */
     private $createDate;
+
 
     /**
      * @var \DateTime $modifyDate
      *
-     * @ORM\Column(name="update_date", type="datetime", nullable=false)
+     * @Column(name="update_date", type="datetime", nullable=false)
      */
     private $updateDate;
     
@@ -101,6 +102,7 @@ class Account
     {
         $this->cards        = new ArrayCollection();
         $this->transactions = new ArrayCollection();
+        $this->updateDate   = new DateTime('now');
     }
      /**
      * Get id
