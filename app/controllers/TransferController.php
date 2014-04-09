@@ -103,7 +103,7 @@ class TransferController extends UserBaseController
 	 */
 	public function show($id)
 	{
-            $account = Doctrine::getRepository("Account")->find(1);
+            $account = Doctrine::getRepository("Account")->find($id);
             if(!$account) {
                  $account =  new Account();
             }
@@ -119,7 +119,16 @@ class TransferController extends UserBaseController
 	 */
 	public function edit($id)
 	{
-		//
+            $accounts = $this->user->getAccounts();
+            $from = array(0 => "Select An Account");
+
+            foreach($accounts as $account) {
+                $from[$account->getId()] = $account->getAccountNo()."(".$account->getBalance().")";
+            }
+
+            View::share('from', $from);
+            
+            $this->layout->content = View::make('transfer.wire');
 	}
 
 	/**
@@ -130,7 +139,52 @@ class TransferController extends UserBaseController
 	 */
 	public function update($id)
 	{
-		//
+            // validate
+            // read more on validation at http://laravel.com/docs/validation
+            $rules = array(
+                    'from_account'       => 'required',
+                    'to_account'      => 'required',
+                    'name'      => 'required',
+                    'bank'      => 'required',
+                    'amount'        => 'required|numeric|min:10',
+                    'address' => 'required'
+            );
+            $validator = Validator::make(Input::all(), $rules);
+
+            // process the login
+            if ($validator->fails()) {
+                    return Redirect::to('transfer/wire/edit')
+                            ->withErrors($validator);
+            } else {
+                    // store
+                    $fromAccount = Doctrine::getRepository("Account")->find(Input::get('from_account'));
+                    if($fromAccount->getBalance() < Input::get('amount')) {
+                        return Redirect::to('transfer/wire/edit')
+                            ->withErrors("You don't have enough balance");
+                    }
+
+                    $transaction = new Transaction();
+                    $transaction->setAccount($fromAccount);
+                    $transaction->setAmount(Input::get('amount'));
+                    $transaction->setDescription(Input::get('description'));
+                    $transaction->setType(Transaction::DEBIT);
+                    Doctrine::persist($transaction);
+
+                    $wtransfer = new WireTransfer();
+                    $wtransfer->setName(Input::get('name'));
+                    $wtransfer->setAccountNo(Input::get('to_account'));
+                    $wtransfer->setAddress(Input::get('address'));
+                    $wtransfer->setBankName(Input::get('bank'));
+                    $wtransfer->setAmount(Input::get('amount'));
+                    $wtransfer->setFromAccount($fromAccount);
+                    Doctrine::persist($wtransfer);
+
+                    Doctrine::flush();
+
+                    // redirect
+                    Session::flash('message', 'Payment completed Successfully!');
+                    return Redirect::to('transfer');
+            }
 	}
 
 	/**
@@ -143,5 +197,5 @@ class TransferController extends UserBaseController
 	{
 		//
 	}
-
+        
 }
