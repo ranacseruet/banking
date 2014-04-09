@@ -95,7 +95,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface
     /**
      * @var \DateTime $createDate
      *
-     * @ORM\Column(name="create_date", type="date", nullable=false)
+     * @ORM\Column(name="create_date", type="datetime", nullable=false)
      */
     private $createDate;
 

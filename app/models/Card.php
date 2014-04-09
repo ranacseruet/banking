@@ -43,7 +43,7 @@ class Card
     /**
      * @var \DateTime $expireDate
      *
-     * @ORM\Column(name="expire_date", type="date", nullable=false)
+     * @ORM\Column(type="datetime")
      */
     private $expireDate;
 
@@ -51,7 +51,7 @@ class Card
     /**
      * @var \DateTime $issueDate
      *
-     * @ORM\Column(name="issue_date", type="date", nullable=false)
+     * @ORM\Column(type="datetime")
      */
     private $issueDate;
 
@@ -68,14 +68,14 @@ class Card
     /**
      * @var \DateTime $createDate
      *
-     * @ORM\Column(name="create_date", type="date", nullable=false)
+     * @ORM\Column(type="datetime")
      */
     private $createDate;
 
     /**
      * @var \DateTime $modifyDate
      *
-     * @ORM\Column(name="update_date", type="datetime", nullable=false)
+     * @ORM\Column(type="datetime")
      */
     private $updateDate;
 
@@ -212,7 +212,11 @@ class Card
      */
     public function getExpireDateToString()
     {
-        return $this->expireDate->format('Y/m');
+        if ($this->expireDate instanceof \DateTime)  {
+            return $this->expireDate->format('Y/m');
+        } else {
+          return '12/16';
+        }
     }
 
     /**
@@ -274,6 +278,20 @@ class Card
 		             'pin_no_confirmation'  => 'required|digits:4',
                      'expire_date'          => 'required|date',
                      'issue_date'           => 'required|date'
+        );
+    }
+
+    /**
+     * Return all rules for Change Pin
+     *
+     * @return array
+     */
+    public static function getRulesForChangePin()
+    {
+        return array('pin_no'               => 'required|digits:4|confirmed',
+		             'pin_no_confirmation'  => 'required|digits:4',
+                     'old_pin_no'           => 'required|digits:4'
+
         );
     }
 }
