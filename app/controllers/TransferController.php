@@ -100,7 +100,12 @@ class TransferController extends UserBaseController
 	 */
 	public function show($id)
 	{
-		//
+            $account = Doctrine::getRepository("Account")->find(1);
+            if(!$account) {
+                 $account =  new Account();
+            }
+            View::share('account', $account);
+            $this->layout->content = View::make('transfer.show');
 	}
 
 	/**

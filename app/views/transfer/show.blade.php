@@ -1,9 +1,8 @@
 
   <!-- Default panel contents -->
-  <h1>Transactions Summary:</h1>
+  <h1>Transactions made On Your Account:</h1>
   <a class="btn btn-success" href="transfer/create">Make A New Transfer</a>
-  @foreach ($accounts as $account)
-    <h2>Account: {{ HTML::link('transfer/'.$account->getId(), $account->getAccountNo(), array()) }} ({{ $account->getType() }})</h2>
+    <h2>Account: {{ $account->getAccountNo() }} ({{ $account->getType() }})</h2>
     <!-- Table -->
     <table class="table">
           <thead>
@@ -16,10 +15,7 @@
             </tr>
           </thead>
           <tbody>
-              @foreach ($account->getTransactions() as $index => $transfer)
-              @if($index > 2 )
-                {{ ''; continue }}
-              @endif
+              @foreach ($account->getTransactions() as $transfer)
               <tr>
                   <td>{{$transfer->getId()}}</td>
                   <td>{{$transfer->getCreateTime()->format("Y-m-d H:i:s")}}</td>
@@ -29,5 +25,4 @@
               </tr>
               @endforeach
           </tbody>
-    </table>
-  @endforeach  
+    </table> 
