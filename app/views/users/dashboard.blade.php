@@ -9,7 +9,7 @@
       <tbody>
           @foreach ($accounts as $account)
           <tr>
-              <td><a href="account/index/{{$account->getId()}}">A/C. {{$account->getAccountNo()}}</a></td>
+              <td><a href="{{ URL::to('account/index/' . $account->getId()) }}">A/C. {{$account->getAccountNo()}}</a></td>
               <td>{{ucfirst($account->getType())}} Account</td>
               <td>{{$account->getBalance()}} CAD</td>
           </tr>
@@ -18,4 +18,4 @@
 </table>
 <br/>
 <br/>
-<p>New Account: <a href="account/accountcreatebyuser">Apply Here</a></p>
+<p>New Account: <a href="{{ URL::to('account/accountcreatebyuser') }}">Apply Here</a></p>

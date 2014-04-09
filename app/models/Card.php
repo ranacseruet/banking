@@ -31,7 +31,7 @@ class Card
      *
      * @Column(name="card_no", type="string", length=12, nullable=false, unique=true)
      */
-    private $cartNo;
+    private $cardNo;
 
     /**
      * @var string $pinNo
@@ -145,6 +145,15 @@ class Card
     }
 
     /**
+     * @return string
+     */
+    public function getTypeToString()
+    {
+        $types = self::getAllType();
+        return $types[strtolower($this->type)];
+    }
+
+    /**
      * @param string $pinNo
      * @return $this;
      */
@@ -199,6 +208,14 @@ class Card
     }
 
     /**
+     * @return \DateTime
+     */
+    public function getExpireDateToString()
+    {
+        return $this->expireDate->format('Y/m');
+    }
+
+    /**
      * @param \DateTime $createDate
      * @return $this;
      */
@@ -220,18 +237,18 @@ class Card
      * @param string $cartNo
      * @return $this;
      */
-    public function setCartNo($cartNo)
+    public function setCardNo($cartNo)
     {
-        $this->cartNo = $cartNo;
+        $this->cardNo = $cartNo;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getCartNo()
+    public function getCardNo()
     {
-        return $this->cartNo;
+        return $this->cardNo;
     }
 
     /**

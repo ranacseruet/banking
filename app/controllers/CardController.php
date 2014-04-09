@@ -53,7 +53,7 @@ class CardController extends BaseController
 
 
             $cardEntity->settype(Input::get('type'));
-            $cardEntity->setCartNo(Input::get('card_no'));
+            $cardEntity->setCardNo(Input::get('card_no'));
             $cardEntity->setExpireDate(new \DateTime(Input::get('expire_date')));
             $cardEntity->setIssueDate(new \DateTime(Input::get('issue_date')));
             $cardEntity->setPinNo(Input::get('pin_no'));
