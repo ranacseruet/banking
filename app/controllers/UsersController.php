@@ -91,7 +91,7 @@ class UsersController extends BaseController
         if($user && Hash::check(Input::get('password'), $user->getPassword())) {
             Auth::login(User::find($user->getid()));
 
-            return Redirect::to('home/dashboard')->with('message', 'You are now logged in!');
+            return Redirect::to('users/dashboard')->with('message', 'You are now logged in!');
         } else {
             return Redirect::to('users/login')->with('message', 'Your username/password combination was incorrect')
 				                              ->withInput();
@@ -99,11 +99,40 @@ class UsersController extends BaseController
 	}
 
     /**
+     * Destroy the session
+     *
+     * @route GET /users/logout
      * @return mixed
      */
     public function getLogout()
     {
 		Auth::logout();
 		return Redirect::to('users/login')->with('message', 'Your are now logged out!');
+	}
+
+
+    /**
+     * Serve the user dashboard
+     *
+     * @route GET /users/dashboard
+     * @return mixed
+     */
+    public function getDashboard()
+    {
+        $this->data["user"] = Auth::user();
+
+        if ($this->data["user"]->role_id == User::ADMIN) {
+            return Redirect::to("admin/dashboard");
+        } else {
+            $user     = Doctrine::getRepository("User")->find(Auth::user()->id);
+            $accounts = $user->getAccounts();
+            if(!$accounts) {
+                 $accounts =  new \Doctrine\Common\Collections\ArrayCollection();
+            }
+
+            $this->data["user"]     = $user;
+            $this->data['accounts'] = $accounts;
+            $this->layout->content  = View::make('users.dashboard', $this->data);
+        }
 	}
 }

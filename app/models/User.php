@@ -18,8 +18,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface
     CONST USER      = 2;
     CONST MANAGER   = 3;
 
-
-
     /**
     * The database table used by the model.
     *

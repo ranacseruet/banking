@@ -9,7 +9,7 @@ use Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine;
  *
  * @author Eftakhairul Islam <eftakhairul@gmail.com>
  */
-class AccountController extends BaseController
+class AccountController extends UserBaseController
 {
 
     /**
@@ -44,8 +44,7 @@ class AccountController extends BaseController
      */
     public function getAccountcreatebyuser()
     {
-        //TODO user_is is not working
-        $this->data["user_id"] = $this->logged_in_user;
+        $this->data["user_id"] = $this->user->getId();
         View::share('type', Account::getALLStatuses());
         $this->layout->content = View::make('account.create', $this->data);
     }
