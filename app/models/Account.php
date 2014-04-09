@@ -90,6 +90,13 @@ class Account
      */
     private $transactions;
     
+    /**
+     * @var Bill $billingAccount
+     *
+     * @OneToOne(targetEntity="Bill", mappedBy="account")
+     */
+    private $billingAccount;
+    
     public function __construct()
     {
         $this->cards = new ArrayCollection();
@@ -241,8 +248,12 @@ class Account
         $this->transactions = $transactions;
         return $this;
     }
+    
+    public function getBillingAccount() {
+        return $this->billingAccount;
+    }
 
-    /**
+        /**
      * Return all statues / enum type
      *
      * @return array

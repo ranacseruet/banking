@@ -61,14 +61,14 @@ class PaymentController extends \UserBaseController {
                         $transaction = new Transaction();
 			$transaction->setAccount($fromAccount);
 			$transaction->setAmount(Input::get('amount'));
-                        $transaction->setDescription(Input::get('description'));
+                        $transaction->setDescription("Bill Payment");
 			$transaction->setType(Transaction::DEBIT);
                         Doctrine::persist($transaction);
                         
                         $transaction = new Transaction();
 			$transaction->setAccount($toAccount);
 			$transaction->setAmount(Input::get('amount'));
-                        $transaction->setDescription(Input::get('description'));
+                        $transaction->setDescription("Bill Payment");
 			$transaction->setType(Transaction::CREDIT);
                         Doctrine::persist($transaction);
                         

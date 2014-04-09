@@ -15,7 +15,7 @@ class BaseController extends Controller {
             $this->logged_in_user  =   Auth::user();
             $this->is_admin        =   "";
             if($this->logged_in_user){
-                if($this->logged_in_user->role_id==1){
+                if($this->logged_in_user->rool_id==1){
                     $this->is_admin  = "admin";
                 }
 

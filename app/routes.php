@@ -24,3 +24,5 @@ Route::get('card/create/id/{id}', 'CardController@getCreate');
 Route::controller('payment', 'PaymentController');
 Route::get('payment/', 'PaymentController@index');
 
+Route::resource('billing-accounts', 'BillingAccountController');
+
