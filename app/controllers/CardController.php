@@ -110,4 +110,52 @@ class CardController extends BaseController
 			return Redirect::to('card/create/' . Input::get('account_id'))->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
 		}
     }
+
+    /**
+     * ATM machine UI
+     *
+     * @route post /atm
+     */
+    public function getAtm()
+    {
+        $this->layout->content = View::make('card.atm');
+    }
+
+    /**
+     * Process ATM Withdraw
+     *
+     * @route post /card/processchangepin
+     */
+    public function postProcessatm()
+    {
+        $validator = Validator::make(Input::all(), Card::getRulesForATMWithdraw());
+
+		if ($validator->passes()) {
+            $card = Doctrine::getRepository("Card")->find(Input::get('card_no'));
+
+            if (empty($card)) {
+                return Redirect::to('/atm')->with('message', 'Invalid Card No.')->withErrors($validator)->withInput();
+            }
+
+            if($card->getAccount()->getBalance() < Input::get('amount')) {
+                return Redirect::to('/atm')->with('message', 'Sorry. Insufficient Balance in your account.')->withErrors($validator)->withInput();
+            }
+
+
+			$transaction = new Transaction();
+			$transaction->setAccount($card->getAccount());
+			$transaction->setAmount(Input::get('amount'));
+            $transaction->setDescription('ATM Withdraw');
+			$transaction->setType(Transaction::DEBIT);
+
+            Doctrine::persist($transaction);
+            Doctrine::flush();
+
+            $this->layout->content = View::make('card.thankyou');
+		} else {
+			return Redirect::to('/atm')->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
+		}
+    }
+
+
 }

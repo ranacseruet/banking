@@ -301,6 +301,19 @@ class Card
     }
 
     /**
+     * Rules for withdraw from ATM Machine
+     *
+     * @return array
+     */
+    public static function getRulesForATMWithdraw()
+    {
+        return array('pin_no'               => 'required|digits:4',
+                     'amount'               => 'required|numeric',
+                     'card_no'              => 'required|numeric'
+        );
+    }
+
+    /**
      * Generate Card number
      *
      * @return int
