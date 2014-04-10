@@ -2,7 +2,7 @@
 <h4>{{ $user->getLastName() }} Accoun's Details</h4>
 
 <br/>
-<a class="btn btn-success" href="{{ URL::to('account/withdraw/') .'/'. $user->getId() }}">&nbsp;&nbsp;&nbsp;Withdraw&nbsp;&nbsp;&nbsp;</a>
+<a class="btn btn-success" href="{{ URL::to('account/withdraw') .'/'. $user->getId() }}">&nbsp;&nbsp;&nbsp;Withdraw&nbsp;&nbsp;&nbsp;</a>
 
 <a style="padding-left: 20px" class="btn btn-success" href="{{ URL::to('account/deposit') .'/'. $user->getId() }}">&nbsp;&nbsp;&nbsp;Deposit&nbsp;&nbsp;&nbsp;</a>
 <br/>

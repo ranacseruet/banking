@@ -2,13 +2,6 @@
 
 use Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine;
 
-/**
- * Account controller
- *
- * Responsible for all account related task of user
- *
- * @author Eftakhairul Islam <eftakhairul@gmail.com>
- */
 class AccountController extends UserBaseController
 {
 

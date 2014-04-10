@@ -6,7 +6,7 @@
   <div class="panel-body">
     <p></p>
   </div>
-  <a class="btn btn-success" href="{{ URL::to('user/registration') }}">Create New User</a>
+  <a class="btn btn-success" href="{{ URL::to('users/register') }}">Create New User</a>
   <!-- Table -->
   <table class="table">
         <thead>
