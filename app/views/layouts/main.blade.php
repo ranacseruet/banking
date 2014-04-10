@@ -28,6 +28,7 @@
                                 <li>{{ HTML::link('billing-accounts', 'Billing Accounts') }}</li>
                              @else
                                 <li>{{ HTML::link('transfer', 'Transactions') }}</li>
+                                <li>{{ HTML::link('payment', 'Payments') }}</li>
                                 <li>{{ HTML::link('payee', 'Payee Management') }}</li>
                              @endif
                             <li>{{ HTML::link('users/logout', 'logout') }}</li>

@@ -110,6 +110,7 @@ class Account
         $this->cards        = new ArrayCollection();
         $this->transactions = new ArrayCollection();
         $this->updateDate   = new DateTime('now');
+        $this->createDate   = new DateTime();
     }
      /**
      * Get id
@@ -333,5 +334,14 @@ class Account
         return array('account_no' => 'required',
                      'amount'     => 'required|numeric'
         );
+    }
+    
+    public static function generateAccountNo()
+    {
+       $query =  Doctrine::createQueryBuilder("Account");
+       $query->select('MAX(a.accountNo) AS accountNo');
+       $query->from("Account", "a");
+       $result = $query->getQuery()->getOneOrNullResult();
+       return intval($result["accountNo"])+1;
     }
 }
