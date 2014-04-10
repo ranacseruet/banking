@@ -322,4 +322,16 @@ class Account
                      'type'          => 'required'
         );
     }
+
+    /**
+     * Return all rules for validation
+     *
+     * @return array
+     */
+    public static function getRulesForDeposit()
+    {
+        return array('account_no' => 'required',
+                     'amount'     => 'required|numeric'
+        );
+    }
 }

@@ -22,7 +22,7 @@ class AccountController extends UserBaseController
      */
     public function __construct()
      {
-         parent::__construct();  
+         parent::__construct();
      }
 
     /**
@@ -105,12 +105,60 @@ class AccountController extends UserBaseController
     {
     }
 
-    /**
+
+   /**
     * Process account creation
     *
-    *@route GET /account/deposit/id/:id
+    * @route GET /account/deposit/id/:id
     */
     public function getDeposit($id)
     {
+        $user         = Doctrine::getRepository("User")->find($id);
+        $accounts     = $user->getAccounts();
+        $userAccounts = array();
+
+        foreach($accounts as $account)
+        {
+            $userAccounts[$account->getId()] = $account->getAccountNo() . " (".$account->getBalance()." CAD)";
+        }
+
+        $this->data['userAccounts'] = $userAccounts;
+        $this->layout->content = View::make('account.deposit', $this->data);
+    }
+
+   /**
+    * Process withdraw from account
+    *
+    * @route POST /account/processwithdraw
+    */
+    public function postProcesswithdraw()
+    {
+    }
+
+    /**
+    * Process deposit to account
+    *
+    *@route GET /account/processdeposit
+    */
+    public function postProcessdeposit()
+    {
+        $validator = Validator::make(Input::all(), Account::getRulesForDeposit());
+
+		if ($validator->passes()) {
+
+            $acount_id   = (int) Input::get('account_no');
+            $account     = Doctrine::getRepository("Account")->find($acount_id);
+            $transaction = new Transaction();
+			$transaction->setAccount($account);
+			$transaction->setAmount(Input::get('amount'));
+            $transaction->setDescription('Deposit');
+			$transaction->setType(Transaction::CREDIT);
+
+            Doctrine::persist($transaction);
+            Doctrine::flush();
+            return Redirect::to('admin/dashboard')->with('message', 'Money is deposited Successfully.');
+        }  else {
+            return Redirect::to('account/deposit/' . Input::get('account_no'))->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
+        }
     }
 }

@@ -26,7 +26,7 @@
                 <td>{{$user->getFirstName()}} {{$user->getLastName()}}</td>
                 <td>{{$user->getEmail()}}</td>
                 <td><a href="{{ URL::to('admin/userdetails') . '/' . $user->getId()}}" class="btn btn-primary">Account Details</a>
-                    <a href="{{ URL::to('account/create/id/') . $user->getId()}}" class="btn btn-primary">Create Account</a>
+                    <a href="{{ URL::to('account/create') .'/' . $user->getId()}}" class="btn btn-primary">Create Account</a>
                 </td>
             </tr>
             @endforeach
