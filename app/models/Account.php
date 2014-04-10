@@ -9,9 +9,10 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Account
 {
-    CONST SAVING     = 'saving';
-    CONST CHECKING   = 'checking';
-    CONST INVESTMENT = 'investment';
+    CONST SAVING        = 'saving';
+    CONST CHECKING      = 'checking';
+    CONST INVESTMENT    = 'investment';
+    CONST CREDIT_CARD   = 'credit_card';
 
     /**
      * @var integer $id
@@ -48,7 +49,7 @@ class Account
     /**
      * @var string $type
      *
-     * @Column(name="type", type="string", columnDefinition="ENUM('saving', 'checking', 'investment')")
+     * @Column(name="type", type="string", columnDefinition="ENUM('saving', 'checking', 'investment', 'credit_card')")
      */
     private $type;
 
@@ -290,9 +291,10 @@ class Account
      */
     public static function getALLStatuses()
     {
-        return array('saving'      => self::SAVING,
-                     'investment'  => self::INVESTMENT,
-                     'checking'    => self::CHECKING );
+        return array(self::SAVING       => 'Saving',
+                     self::INVESTMENT   => 'Investment',
+                     self::CHECKING     => 'Checking',
+                     self::CREDIT_CARD  => "Credit Card");
     }
     
     public function getBalance()
