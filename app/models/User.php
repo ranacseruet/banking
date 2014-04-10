@@ -92,6 +92,21 @@ class User extends Eloquent implements UserInterface, RemindableInterface
      **/
     private $accounts;
 
+
+    /**
+     * @var \DateTime $birthDate
+     *
+     * @Column(name="birth_date", type="datetime", nullable=false)
+     */
+    private $birthDate;
+
+    /**
+     * @var string $address
+     *
+     * @Column(name="address", type="text", nullable=true)
+     */
+    private $address;
+
     /**
      * @var \DateTime $createDate
      *
@@ -315,6 +330,42 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 		return $this->password;
 	}
 
+    /**
+     * @param string $address
+     * @return $this;
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param \DateTime $birthDate
+     * @return $this;
+     */
+    public function setBirthDate($birthDate)
+    {
+        $this->birthDate = $birthDate;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getBirthDate()
+    {
+        return $this->birthDate;
+    }
+
 	/**
 	 * Get the e-mail address where password reminders are sent.
 	 *
@@ -322,22 +373,24 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 	 */
 	public function getReminderEmail()
 	{
-                return $this->email;
+        return $this->email;
 	}
         
-        public function getPayees() 
-        {
-            return $this->payees;
-        }
+    public function getPayees()
+    {
+        return $this->payees;
+    }
 
-        public static function getRules()
-        {
-            return array('first_name'               => 'required|alpha',
-                         'last_name'                => 'required|alpha',
-                         'password'                 => 'required|alpha_num|between:6,12|confirmed',
-                                 'password_confirmation'    => 'required|alpha_num|between:6,12',
-                         'email'                    => 'required|email|unique:users',
-                         'username'                 => 'required|alpha_num|unique:users'
-            );
-        }
+    public static function getRules()
+    {
+        return array('first_name'               => 'required|alpha',
+                     'last_name'                => 'required|alpha',
+                     'password'                 => 'required|alpha_num|between:6,12|confirmed',
+                     'password_confirmation'    => 'required|alpha_num|between:6,12',
+                     'email'                    => 'required|email|unique:users',
+                     'username'                 => 'required|alpha_num|unique:users',
+                     'birth_date'               => 'required|date'
+
+        );
+    }
 }
