@@ -2,6 +2,13 @@
 
 use Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine;
 
+/**
+ * Account controller
+ *
+ * Responsible for all activities of account
+ *
+ * @author Eftakhairul Islam <eftakhairul@gmail.com>
+ */
 class AccountController extends UserBaseController
 {
 
@@ -37,7 +44,8 @@ class AccountController extends UserBaseController
      */
     public function getCreate($id)
     {
-        $this->data["user_id"] = $id;
+        $this->data["user_id"]      = $id;
+        $this->data["account_no"]   = Account::generateAccountNo();
         View::share('type', Account::getALLStatuses());
         $this->layout->content = View::make('account.create', $this->data);
     }
@@ -71,7 +79,7 @@ class AccountController extends UserBaseController
             $accountEntity->setUser($user);
             $accountEntity->settype(Input::get('type'));
             $accountEntity->setAccountNo(Input::get('account_no'));
-            $accountEntity->setInterestRate(Input::get('interest_rate'));
+            $accountEntity->setInterestRate(Input::get('interest_rate', 0));
             $accountEntity->setIsActive(true);
             $accountEntity->setCreateDate(new DateTime('now'));
 
@@ -80,6 +88,18 @@ class AccountController extends UserBaseController
                 Doctrine::flush();
             } catch(\Exception $e) {
                 return Redirect::to('account/create/' . Input::get('user_id'))->with('message', 'Something went wrong')->withErrors($validator)->withInput();
+            }
+
+            if (Input::has('amount')) {
+
+                $transaction = new Transaction();
+                $transaction->setAccount($accountEntity);
+                $transaction->setAmount(Input::get('amount'));
+                $transaction->setDescription('Investment');
+                $transaction->setType(Transaction::CREDIT);
+
+                Doctrine::persist($transaction);
+                Doctrine::flush();
             }
 
             //TODO route has to updated

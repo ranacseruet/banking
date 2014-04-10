@@ -7,8 +7,8 @@
  */
 class Transaction
 {
-    CONST DEBIT     = 'D';
-    CONST CREDIT   = 'C';
+    CONST DEBIT     = 'dr';
+    CONST CREDIT    = 'cr';
     
     /**
      * @var integer $id
@@ -96,7 +96,7 @@ class Transaction
     /**
      * Set type
      *
-     * @param string type
+     * @param string $type
      * @return Investment
      */
     public function setType($type)
@@ -128,7 +128,7 @@ class Transaction
     /**
      * Set account
      *
-     * @param Account type
+     * @param Account $account
      * @return Transaction
      */
     public function setAccount($account)

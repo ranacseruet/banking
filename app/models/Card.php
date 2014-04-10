@@ -22,7 +22,7 @@ class Card
     /**
      * @var string $type
      *
-     * @Column(name="type", type="string", columnDefinition="ENUM('Cr', 'Dr')")
+     * @Column(name="type", type="string", columnDefinition="ENUM('cr', 'dr')")
      */
     private $type;
 
