@@ -67,7 +67,7 @@ class AccountController extends UserBaseController
    /**
     * Process account creation
     *
-    *@route post /account/processaccount
+    *@route Post /account/processaccount
     */
     public function postProcessaccount()
     {
@@ -112,7 +112,7 @@ class AccountController extends UserBaseController
    /**
     * Process account creation by user application
     *
-    *@route post /account/processcreateaccountbyuser
+    *@route Post /account/processcreateaccountbyuser
     */
     public function postProcesscreateaccountbyuser()
     {
@@ -126,7 +126,7 @@ class AccountController extends UserBaseController
             $accountEntity->settype(Input::get('type'));
             $accountEntity->setAccountNo(Input::get('account_no'));
             $accountEntity->setInterestRate(0);
-            $accountEntity->setIsActive(false);
+            $accountEntity->setIsActive(Account::UNAPPROVED);
             $accountEntity->setCreateDate(new DateTime('now'));
 
             try{
@@ -139,6 +139,27 @@ class AccountController extends UserBaseController
 		} else {
 			return Redirect::to('account/accountcreatebyuser')->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
 		}
+    }
+
+    public function getApprovelist()
+    {
+        $this->data["unapprovedAccounts"]  = Doctrine::getRepository("Account")->findby(array('isActive' => Account::UNAPPROVED));
+        $this->layout->content             = View::make('account.approvelist', $this->data);
+    }
+
+    /**
+     * Process admin account approval
+     *
+     * @route GET /account/approve/id/:id
+     */
+    public function getApprove($id)
+    {
+        $account     = Doctrine::getRepository("Account")->find($id);
+        $account->setIsActive(Account::APPROVED);
+        Doctrine::persist($account);
+        Doctrine::flush();
+
+        return Redirect::to('admin/dashboard')->with('message', 'Account Approved');
     }
 
    /**

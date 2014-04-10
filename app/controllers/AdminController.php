@@ -23,9 +23,10 @@ class AdminController extends BaseController
         if(!$this->is_admin)
             return Redirect::to("/")->with('message', 'You are not logged in as admin!');
         
-        $this->data["user"]   =     $this->logged_in_user;
-        $this->data["users"]  = Doctrine::getRepository("User")->findby(array('roolId' => User::USER));
-        $this->layout->content = View::make('admin.dashboard', $this->data);
+        $this->data["user"]                = $this->logged_in_user;
+        $this->data["users"]               = Doctrine::getRepository("User")->findby(array('roolId' => User::USER));
+        $this->data["unapprovedAccounts"]  = Doctrine::getRepository("Account")->findby(array('isActive' => Account::UNAPPROVED));
+        $this->layout->content             = View::make('admin.dashboard', $this->data);
     }
 
 
