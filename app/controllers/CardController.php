@@ -51,8 +51,14 @@ class CardController extends BaseController
 		if ($validator->passes()) {
 
             $account    = Doctrine::getRepository("Account")->find(Input::get('account_id'));
+
+            if (Input::get('type') == Card::CREDIT && $account->getType() != Account::CREDIT_CARD) {
+                    return Redirect::to('card/create/' . Input::get('account_id'))->with('message', 'Account has to be Credit Card.')->withErrors($validator)->withInput();
+            }
+
+
 			$cardEntity = new Card();
-            $cardEntity->settype(Input::get('type'));
+            $cardEntity->setType(Input::get('type'));
             $cardEntity->setCardNo(Input::get('card_no'));
             $cardEntity->setExpireDate(new \DateTime(Input::get('expire_date')));
             $cardEntity->setIssueDate(new \DateTime(Input::get('issue_date')));
@@ -63,7 +69,7 @@ class CardController extends BaseController
             Doctrine::flush();
 
             //TODO route has to updated
-			return Redirect::to('users/login')->with('message', 'Thanks for registering!');
+			return Redirect::to('admin/dashboard')->with('message', 'Card is created.');
 		} else {
 			return Redirect::to('card/create/' . Input::get('account_id'))->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
 		}
