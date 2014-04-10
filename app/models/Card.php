@@ -29,7 +29,7 @@ class Card
     /**
      * @var string $cartNo
      *
-     * @Column(name="card_no", type="string", length=12, nullable=false, unique=true)
+     * @Column(name="card_no", type="bigint", nullable=false, unique=true)
      */
     private $cardNo;
 
@@ -220,7 +220,7 @@ class Card
         if ($this->expireDate instanceof \DateTime)  {
             return $this->expireDate->format('Y/m');
         } else {
-          return '12/16';
+          return '2016/12';
         }
     }
 
@@ -298,5 +298,22 @@ class Card
                      'old_pin_no'           => 'required|digits:4'
 
         );
+    }
+
+    /**
+     * Generate Card number
+     *
+     * @return int
+     */
+    public static function generateAccountNo()
+    {
+       $query =  Doctrine::createQueryBuilder("Card");
+       $query->select('MAX(c.cardNo) AS cardNo');
+       $query->from("Card", "c");
+       $result = $query->getQuery()->getOneOrNullResult();
+       if(!$result) {
+           return 100000000000;
+       }
+       return intval($result["cardNo"])+1;
     }
 }
