@@ -93,7 +93,11 @@ class UsersController extends BaseController
         if($user && Hash::check(Input::get('password'), $user->getPassword())) {
             Auth::login(User::find($user->getid()));
 
-            return Redirect::to('users/dashboard')->with('message', 'You are now logged in!');
+            if($user->getRoolId() == User::ADMIN) {
+                return Redirect::to('admin/dashboard')->with('message', 'You are now logged in!');
+            } else {
+                return Redirect::to('users/dashboard')->with('message', 'You are now logged in!');
+            }
         } else {
             return Redirect::to('users/login')->with('message', 'Your username/password combination was incorrect')
 				                              ->withInput();
