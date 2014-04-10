@@ -14,6 +14,10 @@ class Account
     CONST INVESTMENT    = 'investment';
     CONST CREDIT_CARD   = 'credit_card';
 
+    CONST APPROVED        = 1;
+    CONST UNAPPROVED      = 0;
+
+
     /**
      * @var integer $id
      *
@@ -325,6 +329,19 @@ class Account
                      'type'          => 'required'
         );
     }
+
+    /**
+     * Return all rules for validation
+     *
+     * @return array
+     */
+    public static function getRulesUserApply()
+    {
+        return array('account_no'    => 'required|numeric|min:12|unique:accounts',
+                     'type'          => 'required'
+        );
+    }
+
 
     /**
      * Return all rules for validation
