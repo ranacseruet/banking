@@ -29,5 +29,7 @@ Route::get('payment/', 'PaymentController@index');
 Route::get('admin/userdetails/id/{id}', 'AdminController@getDetails');
 Route::get('account/withdraw/id/{id}', 'AccountController@getWithdraw');
 Route::get('account/deposit/id/{id}', 'AccountController@getDeposit');
+Route::get('account/approve/id/{id}', 'AccountController@getApprove');
+
 
 
