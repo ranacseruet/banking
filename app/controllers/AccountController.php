@@ -59,8 +59,8 @@ class AccountController extends UserBaseController
     {
         $this->data["user_id"] = $this->user->getId();
         View::share('type', Account::getALLStatuses());
-        View::share('type', Account::getALLStatuses());
-        $this->layout->content = View::make('account.create', $this->data);
+        $this->data["account_no"]   = Account::generateAccountNo();
+        $this->layout->content = View::make('account.createbyuser', $this->data);
     }
 
 
@@ -116,7 +116,7 @@ class AccountController extends UserBaseController
     */
     public function postProcesscreateaccountbyuser()
     {
-        $validator = Validator::make(Input::all(), Account::getRules());
+        $validator = Validator::make(Input::all(), Account::getRulesUserApply());
 
 		if ($validator->passes()) {
 
