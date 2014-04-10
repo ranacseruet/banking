@@ -56,9 +56,11 @@ class UsersController extends BaseController
 			$userEntity->setPassword(Hash::make(Input::get('password')));
             $userEntity->setFirstName(Input::get('first_name'));
             $userEntity->setLastName(Input::get('last_name'));
+            $userEntity->setBirthDate(new DateTime(Input::get('birth_date')));
+            $userEntity->setAddress(Input::get('address'));
             $userEntity->setCreateDate(new DateTime('now'));
-
             $userEntity->setRoolId(User::USER);
+
 			Doctrine::persist($userEntity);
             Doctrine::flush();
 
