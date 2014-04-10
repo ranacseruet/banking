@@ -59,6 +59,7 @@ class AccountController extends UserBaseController
     {
         $this->data["user_id"] = $this->user->getId();
         View::share('type', Account::getALLStatuses());
+        View::share('type', Account::getALLStatuses());
         $this->layout->content = View::make('account.create', $this->data);
     }
 
@@ -106,6 +107,38 @@ class AccountController extends UserBaseController
 			return Redirect::to('users/login')->with('message', 'Thanks for registering!');
 		} else {
 			return Redirect::to('account/create/' . Input::get('user_id'))->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
+		}
+    }
+
+   /**
+    * Process account creation by user application
+    *
+    *@route post /account/processcreateaccountbyuser
+    */
+    public function postProcesscreateaccountbyuser()
+    {
+        $validator = Validator::make(Input::all(), Account::getRules());
+
+		if ($validator->passes()) {
+
+            $user          = Doctrine::getRepository("User")->findOneBy(array("id" => Input::get('user_id')));
+			$accountEntity = new Account;
+            $accountEntity->setUser($user);
+            $accountEntity->settype(Input::get('type'));
+            $accountEntity->setAccountNo(Input::get('account_no'));
+            $accountEntity->setInterestRate(0);
+            $accountEntity->setIsActive(false);
+            $accountEntity->setCreateDate(new DateTime('now'));
+
+            try{
+                Doctrine::persist($accountEntity);
+                Doctrine::flush();
+            } catch(\Exception $e) {
+                return Redirect::to('account/create/' . Input::get('user_id'))->with('message', 'Something went wrong')->withErrors($validator)->withInput();
+            }
+			return Redirect::to('users/dashboard')->with('message', 'Application is accepted.');
+		} else {
+			return Redirect::to('account/accountcreatebyuser')->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
 		}
     }
 
