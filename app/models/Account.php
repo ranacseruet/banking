@@ -25,7 +25,7 @@ class Account
     /**
      * @var string $accountNo
      *
-     * @Column(name="account_no", type="string", length=12, nullable=false, unique=true)
+     * @Column(name="account_no", type="bigint", nullable=false, unique=true)
      */
     private $accountNo;
 
