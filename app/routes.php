@@ -12,6 +12,8 @@
 */
 
 Route::get('/', 'HomeController@home');
+Route::get('/atm', 'CardController@getAtm');
+Route::get('/pos', 'CardController@getPos');
 Route::controller('users', 'UsersController');
 Route::controller('admin', 'AdminController');
 Route::resource('transfer', 'TransferController');
