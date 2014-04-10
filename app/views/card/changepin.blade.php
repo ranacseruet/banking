@@ -1,4 +1,5 @@
-<h1>Change Pin</h1>
+<h3>Change Pin</h3>
+<hr/>
 
 <!-- if there are creation errors, they will show here -->
 {{ HTML::ul($errors->all()) }}

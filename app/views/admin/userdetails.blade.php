@@ -9,7 +9,9 @@
 <hr/>
 <!-- Table -->
 @foreach ($accounts as $account)
-    <p>A/C. {{ HTML::link('account/index/'.$account->getId(), $account->getAccountNo() . '  (' . ucfirst($account->getType()).' Account)', array()) }}</p>
+    <p>A/C. {{ HTML::link('account/index/'.$account->getId(), $account->getAccountNo() . '  (' . ucfirst($account->getType()).' Account)', array()) }}
+        <a style="align-self: right" class="btn btn-success" href="{{ URL::to('card/create') .'/'. $account->getId() }}">Add Card</a>
+    </p>
     <!-- Table -->
     <table class="table">
           <thead>

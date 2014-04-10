@@ -1,7 +1,8 @@
 {{ HTML::style('css/datepicker.css')}}
 {{ HTML::script('js/bootstrap-datepicker.js') }}
 
-<h1>Add Card</h1>
+<h4>Add Card</h4>
+<hr/>
 
 <!-- if there are creation errors, they will show here -->
 {{ HTML::ul($errors->all()) }}
@@ -10,7 +11,7 @@
 
 	<div class="form-group">
 		{{ Form::label('card_no', 'Card No.') }}
-		{{ Form::text('card_no',  Input::old('card_no'), array('class' => 'form-control')) }}
+		{{ Form::text('card_no',  Input::old('card_no', $card_no), array('class' => 'form-control')) }}
 	</div>
 
 	<div class="form-group">

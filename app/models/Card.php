@@ -305,7 +305,7 @@ class Card
      *
      * @return int
      */
-    public static function generateAccountNo()
+    public static function generateCardNo()
     {
        $query =  Doctrine::createQueryBuilder("Card");
        $query->select('MAX(c.cardNo) AS cardNo');

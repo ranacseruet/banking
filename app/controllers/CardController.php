@@ -34,6 +34,7 @@ class CardController extends BaseController
     {
         View::share('account_id', $id);
         View::share('type', Card::getAllType());
+        View::share('card_no', Card::generateCardNo());
         $this->layout->content = View::make('card.create');
     }
 
