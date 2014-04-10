@@ -103,8 +103,7 @@ class AccountController extends UserBaseController
                 Doctrine::flush();
             }
 
-            //TODO route has to updated
-			return Redirect::to('users/login')->with('message', 'Thanks for registering!');
+			return Redirect::to('admin/userdetails/' . Input::get('user_id'))->with('message', 'Thanks for registering!');
 		} else {
 			return Redirect::to('account/create/' . Input::get('user_id'))->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
 		}
