@@ -342,6 +342,9 @@ class Account
        $query->select('MAX(a.accountNo) AS accountNo');
        $query->from("Account", "a");
        $result = $query->getQuery()->getOneOrNullResult();
+       if(!$result) {
+           return 100000000000;
+       }
        return intval($result["accountNo"])+1;
     }
 }
