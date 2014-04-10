@@ -25,7 +25,7 @@ class AccountController extends UserBaseController
      */
     public function getIndex($id)
     {
-        $account                = Doctrine::getRepository("Account")->find($id);
+        $account                = Doctrine::getRepository("Account")->findOneById($id);
         $this->data['account']  = $account;
         $this->layout->content  = View::make('account.index', $this->data);
     }
@@ -96,6 +96,17 @@ class AccountController extends UserBaseController
     */
     public function getWithdraw($id)
     {
+        $user         = Doctrine::getRepository("User")->find($id);
+        $accounts     = $user->getAccounts();
+        $userAccounts = array();
+
+        foreach($accounts as $account)
+        {
+            $userAccounts[$account->getId()] = $account->getAccountNo() . " (".$account->getBalance()." CAD)";
+        }
+
+        $this->data['userAccounts'] = $userAccounts;
+        $this->layout->content = View::make('account.withdraw', $this->data);
     }
 
 
@@ -126,12 +137,37 @@ class AccountController extends UserBaseController
     */
     public function postProcesswithdraw()
     {
+        $validator = Validator::make(Input::all(), Account::getRulesForDeposit());
+
+		if ($validator->passes()) {
+
+            $acount_id   = (int) Input::get('account_no');
+            $account     = Doctrine::getRepository("Account")->find($acount_id);
+            $balane      = $account->getBalance();
+
+            if(Input::get('amount') > $balane) {
+                return Redirect::to('account/deposit/' . Input::get('account_no'))->with('message', 'Insufficient Balance');
+            }
+
+            $transaction = new Transaction();
+			$transaction->setAccount($account);
+			$transaction->setAmount(Input::get('amount'));
+            $transaction->setDescription('Withdraw');
+			$transaction->setType(Transaction::DEBIT);
+
+            Doctrine::persist($transaction);
+            Doctrine::flush();
+
+            return Redirect::to('admin/dashboard')->with('message', 'Transaction is done successfully.');
+        }  else {
+            return Redirect::to('account/withdraw/' . Input::get('account_no'))->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
+        }
     }
 
     /**
     * Process deposit to account
     *
-    *@route GET /account/processdeposit
+    * @route GET /account/processdeposit
     */
     public function postProcessdeposit()
     {
