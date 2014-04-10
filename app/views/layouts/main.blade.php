@@ -24,10 +24,12 @@
                     @else
                     
                              @if($is_admin)
+                                <li>{{ HTML::link('admin/dashboard', 'Home') }}</li>
                                 <li>{{ HTML::link('admin/users', 'Users') }}</li>
                                 <li>{{ HTML::link('billing-accounts', 'Billing Accounts') }}</li>
                                 <li>{{ HTML::link('account/approvelist', 'Approval List') }}</li>
                              @else
+                                <li>{{ HTML::link('users/dashboard', 'Home') }}</li>
                                 <li>{{ HTML::link('transfer', 'Transactions') }}</li>
                                 <li>{{ HTML::link('payment', 'Payments') }}</li>
                                 <li>{{ HTML::link('payee', 'Payee Management') }}</li>
