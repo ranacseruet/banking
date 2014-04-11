@@ -130,8 +130,9 @@ class UsersController extends BaseController
         if ($this->data["user"]->role_id == User::ADMIN) {
             return Redirect::to("admin/dashboard");
         } else {
-            $user     = Doctrine::getRepository("User")->find(Auth::user()->id);
-            $accounts = $user->getAccounts();
+            $user     = Doctrine::getRepository("User")->findOneById(Auth::user()->id);
+            $accounts = Doctrine::getRepository("Account")->findby(array('user'     => $user->getId(),
+                                                                         'isActive' => Account::APPROVED));
             if(!$accounts) {
                  $accounts =  new \Doctrine\Common\Collections\ArrayCollection();
             }

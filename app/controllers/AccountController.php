@@ -170,12 +170,13 @@ class AccountController extends UserBaseController
     public function getWithdraw($id)
     {
         $user         = Doctrine::getRepository("User")->find($id);
-        $accounts     = $user->getAccounts();
+        $accounts     = Doctrine::getRepository("Account")->findby(array('user'     => $user->getId(),
+                                                                         'isActive' => Account::APPROVED));
         $userAccounts = array();
 
         foreach($accounts as $account)
         {
-            $userAccounts[$account->getId()] = $account->getAccountNo() . " (".$account->getBalance()." CAD)";
+            $userAccounts[$account->getId()] = $account->getAccountNo() .' - ' . ucfirst($account->getType()) . " (" . $account->getBalance()." CAD)";
         }
 
         $this->data['userAccounts'] = $userAccounts;
@@ -191,12 +192,13 @@ class AccountController extends UserBaseController
     public function getDeposit($id)
     {
         $user         = Doctrine::getRepository("User")->find($id);
-        $accounts     = $user->getAccounts();
+        $accounts     = Doctrine::getRepository("Account")->findby(array('user'     => $user->getId(),
+                                                                         'isActive' => Account::APPROVED));
         $userAccounts = array();
 
         foreach($accounts as $account)
         {
-            $userAccounts[$account->getId()] = $account->getAccountNo() . " (".$account->getBalance()." CAD)";
+            $userAccounts[$account->getId()] = $account->getAccountNo() .' - ' . ucfirst($account->getType()) . " (" . $account->getBalance()." CAD)";
         }
 
         $this->data['userAccounts'] = $userAccounts;
@@ -268,7 +270,7 @@ class AccountController extends UserBaseController
     /**
     * Generate PDF For Individual account
     *
-    * @route GET /account/processdeposit
+    * @route GET /account/generatepdf/:id
     */
     public function getGeneratepdf($id)
     {

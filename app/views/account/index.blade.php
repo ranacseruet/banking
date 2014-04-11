@@ -39,3 +39,7 @@
           @endforeach
       </tbody>
 </table>
+<br/>
+<hr/>
+<p>Export Report As PDF: : <a href="{{ URL::to('account/generatepdf' .'/' . $account->getId()) }}">Click Here</a></p>
+

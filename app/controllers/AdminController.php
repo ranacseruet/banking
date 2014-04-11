@@ -40,10 +40,11 @@ class AdminController extends BaseController
     public function getUserdetails($id)
     {
         if (empty($id)) return Redirect::to('admin/dashboard')->with('message', 'User not found');
-        $user = Doctrine::getRepository("User")->find($id);
+        $user = Doctrine::getRepository("User")->findOneById($id);
         if (empty($user)) return Redirect::to('admin/dashboard')->with('message', 'User not found');
 
-        $accounts = $user->getAccounts();
+        $accounts = Doctrine::getRepository("Account")->findby(array('user'     => $user->getId(),
+                                                                     'isActive' => Account::APPROVED));
         if(!$accounts) {
              $accounts =  new \Doctrine\Common\Collections\ArrayCollection();
         }

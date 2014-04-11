@@ -12,7 +12,8 @@
     <p style="display: inline-block">A/C. {{ HTML::link('account/index/'.$account->getId(), $account->getAccountNo() . '  (' . ucfirst($account->getType()).' Account)', array()) }}
     </p>
   <p style="display: inline-block; float: right">
-      <a style="align-self: right" class="btn btn-success" href="{{ URL::to('card/create') .'/'. $account->getId() }}">Add Card</a>
+      <a class="btn btn-success" href="{{ URL::to('card/create') .'/'. $account->getId() }}">Add Card</a>
+      <a class="btn btn-success" href="{{ URL::to('account/generatepdf') .'/'. $account->getId() }}">Export Report As PDF</a>
   </p>
     <!-- Table -->
     <table class="table table-bordered">
