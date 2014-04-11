@@ -128,6 +128,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface
      */
     private $payees;
 
+    /**
+     * @var ArrayCollection $investments
+     *
+     * @OneToMany(targetEntity="Investment", mappedBy="user")
+     */
+    private $investments;
 
     public function __construct()
     {
@@ -380,6 +386,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface
     {
         return $this->payees;
     }
+    public function getInvestments() {
+        return $this->investments;
+    }
+
+    public function setInvestments(ArrayCollection $investments) {
+        $this->investments = $investments;
+        return $this;
+    }
 
     public static function getRules()
     {
@@ -393,4 +407,5 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 
         );
     }
+    
 }

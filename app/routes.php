@@ -18,6 +18,7 @@ Route::controller('users', 'UsersController');
 Route::controller('admin', 'AdminController');
 Route::resource('transfer', 'TransferController');
 Route::resource('payee', 'PayeeController');
+Route::resource('investment', 'InvestmentController');
 Route::controller('account', 'AccountController');
 Route::controller('card', 'CardController');
 Route::resource('billing-accounts', 'BillingAccountController');

@@ -1,12 +1,18 @@
 <?php
 /**
- * Inevstment
+ * Account Entity
  *
  * @Table(name="investments")
  * @Entity
  */
-class Investment
+class Investment 
 {
+    CONST SIX_MONTH  = 'SIX_MONTH';
+    CONST ONE_YEAR   = 'ONE_YEAR';
+    
+    CONST FIXED = "FIXED";
+    CONST VARIABLE = "VARIABLE";
+    
     /**
      * @var integer $id
      *
@@ -15,85 +21,123 @@ class Investment
      * @GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-    /**
-     * @var string $name
-     *
-     * @Column(name="name", type="string", length=25, nullable=false, unique=true)
-     */
-    private $name;
     
     /**
-     * @var string $type fixed|open
-     *
-     * @Column(name="type", type="string", length=25, nullable=false)
-     */
-    private $type;
-    
-    /**
-     * @var \Doctrine\Common\Collections\ArrayCollection
-     * @ManyToMany(targetEntity="Account", inversedBy="payees")
-     * @JoinTable(name="account_payee")
+     * @var User
+     * @ManyToOne(targetEntity="User", inversedBy="investments")
      **/
-    //private $accounts;
+    private $user;
     
     /**
-     * Get id
+     * @var int $termLength In months
      *
-     * @return integer 
+     * @Column(name="term_length", type="integer", nullable=false)")
      */
-    public function getId()
+    private $termLength;
+    
+    /**
+     * @var string $termType
+     *
+     * @Column(name="term_type", type="string", nullable=false, columnDefinition="ENUM('FIXED', 'VARIABLE')")
+     */
+    private $termType;
+    
+    /**
+     * @var string $isActive
+     *
+     * @Column(name="is_active", type="boolean", nullable=false, options={"default":1})
+     */
+    private $isActive;
+    
+    /**
+     * @var DateTime $createTime
+     *
+     * @Column(name="create_time", type="datetime")
+     */
+    private $createTime;
+    
+    /**
+     * @var float $interestRate In Days
+     *
+     * @Column(name="interest_rate", type="float", nullable=false)")
+     */
+    private $interestRate;
+    
+    
+    /**
+     * @var float $amount In Days
+     *
+     * @Column(name="amount", type="float", nullable=false)")
+     */
+    private $amount;    
+    
+    
+    public function __construct() 
     {
+        $this->createTime = new DateTime();
+    }
+    
+    public function getId() {
         return $this->id;
     }
+
+    public function getUser() {
+        return $this->user;
+    }
+
+    public function setUser(User $user) {
+        $this->user = $user;
+        return $this;
+    }
     
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Investment
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
+    public function getCreateTime() {
+        return $this->createTime;
+    }
+
+    public function getTermLength() {
+        return $this->termLength;
+    }
+
+    public function getIsActive() {
+        return $this->isActive;
+    }
+
+    public function setTermLength($termLength) {
+        $this->termLength = $termLength;
         return $this;
     }
 
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
-    {
-        return $this->name;
+    public function setIsActive($isActive) {
+        $this->isActive = $isActive;
+        return $this;
     }
     
-    /**
-     * Set type
-     *
-     * @param string type
-     * @return Investment
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
+    public function getTermType() {
+        return $this->termType;
+    }
+
+    public function getInterestRate() {
+        return $this->interestRate;
+    }
+
+    public function setTermType($termType) {
+        $this->termType = $termType;
         return $this;
     }
 
-    /**
-     * Get type
-     *
-     * @return string 
-     */
-    public function getType()
-    {
-        return $this->type;
+    public function setInterestRate($interestRate) {
+        $this->interestRate = $interestRate;
+        return $this;
+    }
+    
+    public function getAmount() {
+        return $this->amount;
     }
 
-    public function getAccounts() 
-    {
-        
+    public function setAmount($amount) {
+        $this->amount = $amount;
+        return $this;
     }
+
 
 }

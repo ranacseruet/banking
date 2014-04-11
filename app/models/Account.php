@@ -103,13 +103,6 @@ class Account
      */
     private $billingAccount;
     
-    /**
-     * @var ArrayCollection $termDeposits
-     *
-     * @OneToMany(targetEntity="TermDeposit", mappedBy="account")
-     */
-    private $termDeposits;
-    
     public function __construct()
     {
         $this->cards        = new ArrayCollection();
