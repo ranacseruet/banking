@@ -105,10 +105,10 @@ class CardController extends BaseController
 			Doctrine::persist($cardEntity);
             Doctrine::flush();
 
-            //TODO route has to updated
-			return Redirect::to('users/login')->with('message', 'Thanks for registering!');
+
+			return Redirect::to('account/index/' . $cardEntity->getAccount()->getId())->with('message', 'Pin is changed successfully.');
 		} else {
-			return Redirect::to('card/create/' . Input::get('account_id'))->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
+			return Redirect::to('card/create/' . Input::get('card_id'))->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
 		}
     }
 
