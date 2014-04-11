@@ -17,6 +17,7 @@
             <div class="container">
                 <ul class="nav">
                             <li>{{ HTML::link('/', 'Site Home') }}</li>
+                            <li>{{ HTML::link('/atm', 'ATM') }}</li>
                      @if(!Auth::check())
                             <li>{{ HTML::link('users/register', 'Register') }}</li>   
                             <li>{{ HTML::link('users/login', 'Login') }}</li>
