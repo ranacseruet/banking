@@ -23,12 +23,14 @@
           @endforeach
       </tbody>
 </table>
+ @if (count($account->getCards()) != 0)
 <br/>
 <br/>
 <h4>Cards</h4>
 <!-- Table -->
 <table class="table">
       <tbody>
+
           @foreach ($account->getCards() as $card)
           <tr>
               <td>Master Card - {{$card->getCardNo()}}</td>
@@ -39,7 +41,9 @@
           @endforeach
       </tbody>
 </table>
+
 <br/>
+@endif
 <hr/>
 <p>Export Report As PDF: : <a href="{{ URL::to('account/generatepdf' .'/' . $account->getId()) }}">Click Here</a></p>
 
