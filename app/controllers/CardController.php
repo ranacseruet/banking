@@ -68,7 +68,6 @@ class CardController extends BaseController
 			Doctrine::persist($cardEntity);
             Doctrine::flush();
 
-            //TODO route has to updated
 			return Redirect::to('admin/dashboard')->with('message', 'Card is created.');
 		} else {
 			return Redirect::to('card/create/' . Input::get('account_id'))->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
