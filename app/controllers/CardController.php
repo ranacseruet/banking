@@ -101,6 +101,7 @@ class CardController extends BaseController
 			$cardEntity = Doctrine::getRepository("Card")->find(Input::get('card_id'));
             $cardEntity->setPinNo(Input::get('pin_no'));
             $cardEntity->setUpdateDate(new \DateTime('now'));
+
 			Doctrine::persist($cardEntity);
             Doctrine::flush();
 

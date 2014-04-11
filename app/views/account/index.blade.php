@@ -36,7 +36,7 @@
               <td>Master Card - {{$card->getCardNo()}}</td>
               <td>Expire On {{$card->getExpireDateToString()}}</td>
               <td>{{$card->getTypeToString()}} Card</td>
-              <td><a href="" class="btn btn-primary">Change Pin</a></td>
+              <td><a href="{{ URL::to('card/changepin' . '/' . $card->getId()) }}" class="btn btn-primary">Change Pin</a></td>
           </tr>
           @endforeach
       </tbody>
