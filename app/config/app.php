@@ -106,7 +106,8 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
-                'Atrauzzi\LaravelDoctrine\ServiceProvider',
+        'Atrauzzi\LaravelDoctrine\ServiceProvider',
+        'Thujohn\Pdf\PdfServiceProvider',
 	),
 
 	/*
@@ -172,7 +173,8 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
-                'Doctrine'        => 'Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine',
+        'Doctrine'        => 'Atrauzzi\LaravelDoctrine\Support\Facades\Doctrine',
+        'PDF'             => 'Thujohn\Pdf\PdfFacade',
 	),
 
 );
