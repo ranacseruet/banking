@@ -15,21 +15,19 @@
       <div class="navbar">
         <div class="navbar-inner">
             <div class="container">
-                <ul class="nav"> 
+                <ul class="nav">
+                            <li>{{ HTML::link('/', 'Site Home') }}</li>
                      @if(!Auth::check())
-                            
                             <li>{{ HTML::link('users/register', 'Register') }}</li>   
                             <li>{{ HTML::link('users/login', 'Login') }}</li>
                             
                     @else
-                    
                              @if($is_admin)
-                                <li>{{ HTML::link('admin/dashboard', 'Home') }}</li>
-                                <li>{{ HTML::link('admin/users', 'Users') }}</li>
+                                <li>{{ HTML::link('admin/dashboard', 'Dashboard') }}</li>
                                 <li>{{ HTML::link('billing-accounts', 'Billing Accounts') }}</li>
                                 <li>{{ HTML::link('account/approvelist', 'Approval List') }}</li>
                              @else
-                                <li>{{ HTML::link('users/dashboard', 'Home') }}</li>
+                                <li>{{ HTML::link('users/dashboard', 'Dashboard') }}</li>
                                 <li>{{ HTML::link('transfer', 'Transactions') }}</li>
                                 <li>{{ HTML::link('payment', 'Payments') }}</li>
                                 <li>{{ HTML::link('payee', 'Payee Management') }}</li>
