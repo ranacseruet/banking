@@ -237,7 +237,7 @@ class AccountController extends UserBaseController
         }
     }
 
-    /**
+   /**
     * Process deposit to account
     *
     * @route GET /account/processdeposit
@@ -262,5 +262,20 @@ class AccountController extends UserBaseController
         }  else {
             return Redirect::to('account/deposit/' . Input::get('account_no'))->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
         }
+    }
+
+
+    /**
+    * Generate PDF For Individual account
+    *
+    * @route GET /account/processdeposit
+    */
+    public function getGeneratepdf($id)
+    {
+        $account                = Doctrine::getRepository("Account")->findOneById($id);
+        $this->data['account']  = $account;
+        $html                   = View::make('account.pdf', $this->data);
+
+        return PDF::load($html, 'A4', 'portrait')->download($account->getAccountNo());
     }
 }

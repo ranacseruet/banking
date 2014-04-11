@@ -9,11 +9,13 @@
 <hr/>
 <!-- Table -->
 @foreach ($accounts as $account)
-    <p>A/C. {{ HTML::link('account/index/'.$account->getId(), $account->getAccountNo() . '  (' . ucfirst($account->getType()).' Account)', array()) }}
-        <a style="align-self: right" class="btn btn-success" href="{{ URL::to('card/create') .'/'. $account->getId() }}">Add Card</a>
+    <p style="display: inline-block">A/C. {{ HTML::link('account/index/'.$account->getId(), $account->getAccountNo() . '  (' . ucfirst($account->getType()).' Account)', array()) }}
     </p>
+  <p style="display: inline-block; float: right">
+      <a style="align-self: right" class="btn btn-success" href="{{ URL::to('card/create') .'/'. $account->getId() }}">Add Card</a>
+  </p>
     <!-- Table -->
-    <table class="table">
+    <table class="table table-bordered">
           <thead>
             <tr>
               <th>#</th>
@@ -31,12 +33,13 @@
               <tr>
                   <td>{{$transfer->getId()}}</td>
                   <td>{{$transfer->getCreateTime()->format("Y-m-d H:i:s")}}</td>
-                  <td>{{$transfer->getType()}}</td>
+                  <td>{{ strtoupper($transfer->getType())}}</td>
                   <td>{{$transfer->getDescription()}}</td>
                   <td>{{$transfer->getAmount()}}</td>
               </tr>
               @endforeach
           </tbody>
     </table>
+  <br/>
 @endforeach
 

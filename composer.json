@@ -11,7 +11,8 @@
                 "doctrine/orm" : "2.4.0",
                 "doctrine/migrations": "1.0.*@dev",
                 "doctrine/dbal": "2.5.*@dev",
-                "atrauzzi/laravel-doctrine": "dev-master"
+                "atrauzzi/laravel-doctrine": "dev-master",
+                "thujohn/pdf": "dev-master"
 	},
 	"autoload": {
 		"classmap": [
