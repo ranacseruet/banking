@@ -1,13 +1,13 @@
 
   <!-- Default panel contents -->
-  <h1>Transactions Summary:</h1>
+  <h2>Transactions Summary</h2>
   <p>
       Only latest 3 transactions are shown. see individual account details via link for complete details of an account.
   </p>
-  <a class="btn btn-success" href="transfer/create">New Transaction</a>
-  <a class="btn btn-success" href="transfer/wire/edit">New Wire Transfer</a>
+  <a class="btn btn-success" href="{{URL::to('transfer/create')}}">New Transaction</a>
+  <a class="btn btn-success" href="{{URL::to('transfer/wire/edit')}}">New Wire Transfer</a>
   @foreach ($accounts as $account)
-  <h3><strong>Account: {{ HTML::link('account/index/'.$account->getId(), $account->getAccountNo(), array()) }} ({{ $account->getType() }})</strong></h3>
+  <h5><strong>Account: {{ HTML::link('account/index/'.$account->getId(), $account->getAccountNo(), array()) }}  ({{ ucfirst($account->getType()) }} Account)</strong></h5>
     <!-- Table -->
     <table class="table">
           <thead>

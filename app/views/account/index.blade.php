@@ -21,6 +21,11 @@
               <td>{{$transfer->getAmount()}}</td>
           </tr>
           @endforeach
+          @if(count($account->getTransactions()) != 0)
+            <tr>
+              <td colspan="5" style="text-align: center">Total: {{$account->getBalance()}}</td>
+          </tr>
+          @endif
       </tbody>
 </table>
  @if (count($account->getCards()) != 0)
