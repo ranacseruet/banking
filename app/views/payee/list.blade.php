@@ -1,6 +1,6 @@
 
   <!-- Default panel contents -->
-  <h1>Bill Payees added On Your Accounts:</h1>
+  <h3>Bill Payees added On Your Accounts:</h3>
   <a class="btn btn-success" href="payee/create">Add A New Payee</a>
     <!-- Table -->
     <table class="table">
