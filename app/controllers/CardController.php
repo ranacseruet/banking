@@ -131,7 +131,7 @@ class CardController extends BaseController
         $validator = Validator::make(Input::all(), Card::getRulesForATMWithdraw());
 
 		if ($validator->passes()) {
-            $card = Doctrine::getRepository("Card")->find(Input::get('card_no'));
+            $card = Doctrine::getRepository("Card")->findby(array('cardNo' => Input::get('card_no')));
 
             if (empty($card)) {
                 return Redirect::to('/atm')->with('message', 'Invalid Card No.')->withErrors($validator)->withInput();
