@@ -95,7 +95,19 @@ class InvestmentController extends \UserBaseController {
 	 */
 	public function show($id)
 	{
-		//
+            $investment = Doctrine::getRepository("Investment")->find($id);
+            View::share('account', $investment);
+            $accounts = $this->user->getAccounts();
+            $to = array(0 => "Select An Account");
+
+            foreach($accounts as $account) {
+                if($account->getType() == Account::CHECKING) {
+                    $to[$account->getId()] = $account->getAccountNo()."(".$account->getBalance().")";
+                }
+            }
+            View::share('to', $to);
+            
+            $this->layout->content = View::make('investment.show');
 	}
 
 	/**
@@ -117,7 +129,38 @@ class InvestmentController extends \UserBaseController {
 	 */
 	public function update($id)
 	{
-		//
+            /**
+             * @var Investment Description
+             */
+            $investment = Doctrine::getRepository("Investment")->find($id);
+            $toAccount = Doctrine::getRepository("Account")->find(Input::get('to_account'));
+            $interest = 0;
+            if($investment->isMatured()) {
+                $interest = $investment->getInterestTotal();
+                $transaction1 = new Transaction();
+                $transaction1->setAccount($toAccount);
+                $transaction1->setAmount($interest);
+                $transaction1->setDescription("Interest Credit From Investment");
+                $transaction1->setType(Transaction::CREDIT);
+                Doctrine::persist($transaction1);
+            }
+            
+            $transaction = new Transaction();
+            $transaction->setAccount($toAccount);
+            $transaction->setAmount($investment->getAmount());
+            $transaction->setDescription("Redeem From Investment");
+            $transaction->setType(Transaction::CREDIT);
+            Doctrine::persist($transaction);
+            
+            $investment->setIsActive(false);
+            Doctrine::persist($investment);
+            
+            Doctrine::flush();
+            
+            return Redirect::to('investment');
+		//Credit amount+interest to checking account.
+                //delete investment(deactivate)
+                //
 	}
 
 	/**

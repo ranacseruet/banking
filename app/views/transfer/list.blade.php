@@ -8,7 +8,10 @@
   <a class="btn btn-success" href="{{URL::to('transfer/wire/edit')}}">New Wire Transfer</a>
   <br/>
   @foreach ($accounts as $account)
-  <h5><strong>A/C. {{ HTML::link('account/index/'.$account->getId(), $account->getAccountNo(), array()) }}  ({{ ucfirst($account->getType()) }} Account)</strong></h5>
+  @if(!$account->getIsActive())
+    {{ '';continue }}
+  @endif
+  <h5><strong>A/C. {{$account->getAccountNo()}} ({{ ucfirst($account->getType()) }} Account) {{ HTML::link('account/index/'.$account->getId(), "View Details", array()) }}</strong></h5>
     <!-- Table -->
     <table class="table">
           <thead>

@@ -1,7 +1,7 @@
 
   <!-- Default panel contents -->
   <h1>Transactions Summary:</h1>
-  <a class="btn btn-success" href="investment/create">New Investment</a>
+  {{ HTML::link('investment/create', "New Investment", array('class' => 'btn btn-primary') ) }}
     <!-- Table -->
     <table class="table">
           <thead>
@@ -11,16 +11,21 @@
               <th>Term Type</th>
               <th>Interest Rate</th>
               <th>Amount</th>
+              <th>Option</th>
             </tr>
           </thead>
           <tbody>
               @foreach ($accounts as $index => $account)
+              @if(!$account->getIsActive())
+                {{ '';continue }}
+              @endif
               <tr>
                   <td>{{$account->getId()}}</td>
                   <td>{{$account->getCreateTime()->format("Y-m-d H:i:s")}}</td>
                   <td>{{$account->getTermType()}}</td>
                   <td>{{$account->getInterestRate()}}</td>
                   <td>{{$account->getAmount()}}</td>
+                  <td>{{ HTML::link('investment/'.$account->getId(), "Redeem/Details", array('class' => 'btn btn-success') ) }}</td>
               </tr>
               @endforeach
           </tbody>

@@ -139,5 +139,26 @@ class Investment
         return $this;
     }
 
-
+    public function getInterestTotal()
+    {
+        return ($this->interestRate/12)*$this->termLength;
+    }
+    
+    public function isMatured()
+    {
+        if(isset($this->isMatured)) {
+            return $this->isMatured;
+        }
+        $now = new DateTime();
+//        /echo $this->getMaturityDate()->getTimestamp()." : ".$now->getTimestamp();
+        if($this->getMaturityDate()->getTimestamp() > $now->getTimestamp()) {
+            return false;
+        }
+        return true;
+    }
+    
+    public function getMaturityDate()
+    {
+        return $this->createTime->add(new DateInterval('P'.$this->termLength.'M'));
+    }
 }
