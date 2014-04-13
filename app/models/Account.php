@@ -289,9 +289,9 @@ class Account
     public static function getALLStatuses()
     {
         return array(self::SAVING       => 'Saving',
-                     self::INVESTMENT   => 'Investment',
-                     self::CHECKING     => 'Checking',
-                     self::CREDIT_CARD  => "Credit Card");
+                     //self::INVESTMENT   => 'Investment',
+                     self::CHECKING     => 'Checking');
+                     //self::CREDIT_CARD  => "Credit Card");
     }
     
     public function getBalance()
@@ -354,7 +354,8 @@ class Account
        $query->select('MAX(a.accountNo) AS accountNo');
        $query->from("Account", "a");
        $result = $query->getQuery()->getOneOrNullResult();
-       if(!$result) {
+       
+       if(!$result || $result["accountNo"]==0) {
            return 100000000000;
        }
        return intval($result["accountNo"])+1;
