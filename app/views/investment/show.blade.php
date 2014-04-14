@@ -1,4 +1,5 @@
-<h1>Open Investment Account:</h1>
+<h3>Investment Details</h3>
+<hr/>
 <!-- if there are creation errors, they will show here -->
 {{ HTML::ul($errors->all()) }}
 
@@ -41,7 +42,7 @@
             {{ Form::label('to', 'To Account') }}
             {{ Form::select('to_account', $to, Input::old('to_account'), array('class' => 'form-control')) }}
     </div>                            
-
+    <br/>
     @if($account->isMatured())
         {{ Form::submit('Redeem!', array('class' => 'btn btn-primary')) }}
     @else

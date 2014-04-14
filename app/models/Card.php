@@ -324,9 +324,11 @@ class Card
        $query->select('MAX(c.cardNo) AS cardNo');
        $query->from("Card", "c");
        $result = $query->getQuery()->getOneOrNullResult();
-       if(!$result) {
+
+       if(!$result || $result["cardNo"] == 0) {
            return 100000000000;
        }
+
        return intval($result["cardNo"])+1;
     }
 }

@@ -1,7 +1,8 @@
 
   <!-- Default panel contents -->
-  <h1>Transactions Summary:</h1>
+  <h3>Investment Summary</h3>
   {{ HTML::link('investment/create', "New Investment", array('class' => 'btn btn-primary') ) }}
+  <br/>
     <!-- Table -->
     <table class="table">
           <thead>
