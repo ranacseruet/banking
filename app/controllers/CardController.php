@@ -53,7 +53,7 @@ class CardController extends BaseController
             $account    = Doctrine::getRepository("Account")->find(Input::get('account_id'));
 
             if (Input::get('type') == Card::CREDIT && $account->getType() != Account::CREDIT_CARD) {
-                return Redirect::to('card/create/' . Input::get('account_id'))->with('message', 'Account has to be Credit Card.')->withErrors($validator)->withInput();
+                return Redirect::to('card/create/' . Input::get('account_id'))->with('message', 'Account has to be Credit Card')->withErrors($validator)->withInput();
             }
 
 
@@ -68,7 +68,7 @@ class CardController extends BaseController
 			Doctrine::persist($cardEntity);
             Doctrine::flush();
 
-			return Redirect::to('admin/dashboard')->with('message', 'Card is created.');
+			return Redirect::to('admin/dashboard')->with('message', 'Card is added successfully');
 		} else {
 			return Redirect::to('card/create/' . Input::get('account_id'))->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
 		}
