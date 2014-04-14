@@ -69,7 +69,7 @@ class PayeeController extends UserBaseController {
                         Doctrine::flush();
                         
 			// redirect
-			Session::flash('message', 'Payee added Successfully!');
+			Session::flash('message', 'Payee is added successfully!');
 			return Redirect::to('payee');
 		}
 	}
@@ -116,7 +116,7 @@ class PayeeController extends UserBaseController {
 	public function destroy($id)
 	{
             Doctrine::remove(Doctrine::getPartialReference("Payee", $id));
-            Doctrine::flush();
+            Session::flash('message', 'Payee is deleted successfully!');
             return Redirect::to("payee");
 	}
 
