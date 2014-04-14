@@ -82,7 +82,7 @@ class PaymentController extends \UserBaseController {
                         Doctrine::flush();
                         
 			// redirect
-			Session::flash('message', 'Payment completed Successfully!');
+			Session::flash('message', 'Payment is completed successfully.');
 			return Redirect::to('transfer');
 		}
         }
