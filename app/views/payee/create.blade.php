@@ -1,4 +1,4 @@
-<h1>Make a New Transfer</h1>
+<h1>Create a New Payee:</h1>
 
 <!-- if there are creation errors, they will show here -->
 {{ HTML::ul($errors->all()) }}

@@ -23,9 +23,9 @@ class UsersController extends BaseController
 
 		$this->beforeFilter('auth', array('only'=>array('getDashboard')));
 
-        if (Auth::check()) {
+            if (Auth::check()) {
             return Redirect::to('users/dashboard')->with('message', 'You are already logged in!');
-        }
+            }
 	}
 
     /**
@@ -125,6 +125,10 @@ class UsersController extends BaseController
      */
     public function getDashboard()
     {
+        if (!Auth::check()) {
+            return Redirect::to('users/login');
+        }
+        
         $this->data["user"] = Auth::user();
 
         if ($this->data["user"]->role_id == User::ADMIN) {
