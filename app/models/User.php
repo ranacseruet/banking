@@ -397,8 +397,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface
 
     public static function getRules()
     {
-        return array('first_name'               => 'required|alpha',
-                     'last_name'                => 'required|alpha',
+        return array('first_name'               => 'required',
+                     'last_name'                => 'required',
                      'password'                 => 'required|alpha_num|min:6|confirmed',
                      'password_confirmation'    => 'required|alpha_num|min:6',
                      'email'                    => 'required|email|unique:users',

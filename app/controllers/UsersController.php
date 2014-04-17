@@ -63,6 +63,7 @@ class UsersController extends BaseController
 
 			Doctrine::persist($userEntity);
             Doctrine::flush();
+            $this->doLog("User created. User id:" .  $userEntity->getId());
 
 			return Redirect::to('users/login')->with('message', 'Thanks for registering!');
 		} else {
