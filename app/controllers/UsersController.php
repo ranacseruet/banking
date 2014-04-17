@@ -60,7 +60,7 @@ class UsersController extends BaseController
             $userEntity->setAddress(Input::get('address'));
             $userEntity->setCreateDate(new DateTime('now'));
             $userEntity->setRoolId(User::USER);
-
+            $userEntity->setPhone(Input::get('phone'));
 			Doctrine::persist($userEntity);
             Doctrine::flush();
             $this->doLog("User created. User id:" .  $userEntity->getId());
