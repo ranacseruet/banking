@@ -62,7 +62,7 @@ class CardController extends BaseController
             $cardEntity->setCardNo(Input::get('card_no'));
             $cardEntity->setExpireDate(new \DateTime(Input::get('expire_date')));
             $cardEntity->setIssueDate(new \DateTime(Input::get('issue_date')));
-            $cardEntity->setPinNo(Input::get('pin_no'));
+            $cardEntity->setPinNo(md5(Input::get('pin_no')));
             $cardEntity->setCreateDate(new \DateTime('now'));
             $cardEntity->setAccount($account);
 			Doctrine::persist($cardEntity);
@@ -98,7 +98,7 @@ class CardController extends BaseController
         if ($validator->passes()) {
 
 			$cardEntity = Doctrine::getRepository("Card")->find(Input::get('card_id'));
-            $cardEntity->setPinNo(Input::get('pin_no'));
+            $cardEntity->setPinNo(md5(Input::get('pin_no')));
             $cardEntity->setUpdateDate(new \DateTime('now'));
 
 			Doctrine::persist($cardEntity);
@@ -131,10 +131,11 @@ class CardController extends BaseController
         $validator = Validator::make(Input::all(), Card::getRulesForATMWithdraw());
 
 		if ($validator->passes()) {
-            $card = Doctrine::getRepository("Card")->findby(array('cardNo' => Input::get('card_no')));
+            $card = Doctrine::getRepository("Card")->findby(array('cardNo' => Input::get('card_no'),
+                                                                  'pin_no' => md5(Input::get('pin_no'))));
 
             if (empty($card)) {
-                return Redirect::to('/atm')->with('message', 'Invalid Card No.')->withErrors($validator)->withInput();
+                return Redirect::to('/atm')->with('message', 'Invalid Card No. and Pin')->withErrors($validator)->withInput();
             }
 
             if($card->getAccount()->getBalance() < Input::get('amount')) {

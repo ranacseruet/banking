@@ -92,7 +92,8 @@ class TransferController extends UserBaseController
                         Doctrine::flush();
                         
 			// redirect
-			Session::flash('message', 'Payment completed Successfully!');
+            $this->doLog('Transaction is done successfully. Transaction Id:'. $transaction->getId());
+			Session::flash('message', "Transaction is done successfully. <a href='" . url('account/receipt', array('id' => $transaction->getId())) ."' target='_blank'>Print Receipt</a>.");
 			return Redirect::to('transfer');
 		}
            
@@ -180,12 +181,13 @@ class TransferController extends UserBaseController
                     $wtransfer->setBankName(Input::get('bank'));
                     $wtransfer->setAmount(Input::get('amount'));
                     $wtransfer->setFromAccount($fromAccount);
-                    Doctrine::persist($wtransfer);
 
+                    Doctrine::persist($wtransfer);
                     Doctrine::flush();
 
+                    $this->doLog('Transaction is done successfully. Transaction Id:'. $wtransfer->getId());
                     // redirect
-                    Session::flash('message', 'Payment completed Successfully!');
+                    Session::flash('message', "Transaction is done successfully. <a href='" . url('account/receipt', array('id' => $wtransfer->getId())) ."' target='_blank'>Print Receipt</a>.");
                     return Redirect::to('transfer');
             }
 	}
