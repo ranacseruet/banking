@@ -291,4 +291,9 @@ class AccountController extends UserBaseController
         $this->data['transaction'] = Doctrine::getRepository("Transaction")->findOneById($id);
         return View::make('account.receipt', $this->data);
     }
+
+    public function getPasswordupdate()
+    {
+        return Redirect::to('users/changepassword/' . Auth::user()->id)->with('message', '');
+    }
 }
