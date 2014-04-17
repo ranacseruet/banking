@@ -36,7 +36,7 @@ class Card
     /**
      * @var string $pinNo
      *
-     * @Column(name="pin_no", type="string", length=4, nullable=true)
+     * @Column(name="pin_no", type="string", length=100, nullable=true)
      */
     private $pinNo;
 
