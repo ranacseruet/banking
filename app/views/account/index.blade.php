@@ -9,6 +9,7 @@
           <th>Transfer Type</th>
           <th>Summary</th>
           <th>Amount</th>
+          <th>Download Receipt</th>
         </tr>
       </thead>
       <tbody>
@@ -19,6 +20,7 @@
               <td>{{$transfer->getType()}}</td>
               <td>{{$transfer->getDescription()}}</td>
               <td>{{$transfer->getAmount()}}</td>
+              <td>{{ HTML::link('account/receipt/'.$transfer->getId(), 'Reciept', array()) }}</td>
           </tr>
           @endforeach
           @if(count($account->getTransactions()) != 0)
