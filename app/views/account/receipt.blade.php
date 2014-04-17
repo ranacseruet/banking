@@ -1,6 +1,8 @@
 <html>  <!-- Default panel contents -->
     <body>
-        <h5>Transaction Receipt</h5>
+        <div align="center">
+        <h4>Transaction Receipt</h4>
+        <div>
         <hr>
         <!-- Table -->
         <pre>
