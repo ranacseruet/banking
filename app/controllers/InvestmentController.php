@@ -101,7 +101,7 @@ class InvestmentController extends \UserBaseController {
             $to = array(0 => "Select An Account");
 
             foreach($accounts as $account) {
-                if($account->getType() == Account::CHECKING) {
+                if($account->getIsActive() && $account->getType() == Account::CHECKING) {
                     $to[$account->getId()] = $account->getAccountNo()."(".$account->getBalance().")";
                 }
             }
@@ -129,14 +129,29 @@ class InvestmentController extends \UserBaseController {
 	 */
 	public function update($id)
 	{
-            /**
+             /**
              * @var Investment Description
              */
             $investment = Doctrine::getRepository("Investment")->find($id);
+            
+            $rules = array(
+			'to_account'       => 'required',
+			'amount'        => 'required|numeric|max:'.$investment->getAmount()
+		);
+            $validator = Validator::make(Input::all(), $rules);
+
+            // process the login
+            if ($validator->fails()) {
+                    return Redirect::to('investment/'.$id)
+                            ->withErrors($validator);
+            }
+            
+            $amount = Input::get('amount');
+           
             $toAccount = Doctrine::getRepository("Account")->find(Input::get('to_account'));
             $interest = 0;
             if($investment->isMatured()) {
-                $interest = $investment->getInterestTotal();
+                $interest = $investment->getInterestTotal($amount);
                 $transaction1 = new Transaction();
                 $transaction1->setAccount($toAccount);
                 $transaction1->setAmount($interest);
@@ -147,20 +162,23 @@ class InvestmentController extends \UserBaseController {
             
             $transaction = new Transaction();
             $transaction->setAccount($toAccount);
-            $transaction->setAmount($investment->getAmount());
+            $transaction->setAmount($amount);
             $transaction->setDescription("Redeem From Investment");
             $transaction->setType(Transaction::CREDIT);
             Doctrine::persist($transaction);
             
-            $investment->setIsActive(false);
+            if($amount == $investment->getAmount()) {
+                $investment->setIsActive(false);
+            }
+            else {
+                $balance = $investment->getAmount() - $amount;
+                $investment->setAmount($balance);
+            }
             Doctrine::persist($investment);
             
             Doctrine::flush();
             
             return Redirect::to('investment');
-		//Credit amount+interest to checking account.
-                //delete investment(deactivate)
-                //
 	}
 
 	/**

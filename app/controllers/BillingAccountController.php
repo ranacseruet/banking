@@ -44,7 +44,7 @@ class BillingAccountController extends \AdminBaseController {
 		// read more on validation at http://laravel.com/docs/validation
 		$rules = array(
 			'account'       => 'required',
-			'name'      => 'required'
+			'name'      => 'required|unique:bills'
 		);
 		$validator = Validator::make(Input::all(), $rules);
 

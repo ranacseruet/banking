@@ -267,12 +267,26 @@ class AccountController extends UserBaseController
     }
 
 
-    /**
+   /**
     * Generate PDF For Individual account
     *
     * @route GET /account/generatepdf/:id
     */
     public function getGeneratepdf($id)
+    {
+        $account                = Doctrine::getRepository("Account")->findOneById($id);
+        $this->data['account']  = $account;
+        $html                   = View::make('account.pdf', $this->data);
+
+        return PDF::load($html, 'A4', 'portrait')->download($account->getAccountNo());
+    }
+
+    /**
+    * Generate PDF For Individual account
+    *
+    * @route GET /account/receipt/:id
+    */
+    public function getReceipt($id)
     {
         $account                = Doctrine::getRepository("Account")->findOneById($id);
         $this->data['account']  = $account;
