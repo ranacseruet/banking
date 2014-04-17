@@ -32,7 +32,10 @@ class TransferController extends UserBaseController
             $to = array(0 => "Select An Account");
 
             foreach($accounts as $account) {
-                $from[$account->getId()] = $account->getAccountNo()."(".$account->getBalance().")";
+                if(!$account->getIsActive())continue;
+                if($account->getType() != Account::CHECKING || Account::SAVING) {
+                    $from[$account->getId()] = $account->getAccountNo()."(".$account->getBalance().")";
+                }
                 $to[$account->getId()] = $account->getAccountNo()."(".$account->getBalance().")";
             }
 
