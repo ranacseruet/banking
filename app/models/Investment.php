@@ -139,9 +139,12 @@ class Investment
         return $this;
     }
 
-    public function getInterestTotal()
+    public function getInterestTotal($amount = 0)
     {
-        return ($this->interestRate/12)*$this->termLength;
+        if($amount == 0) {
+            $amount = $this->amount;
+        }
+        return (((($this->interestRate)/12)*$this->termLength)/100)*$amount;
     }
     
     public function isMatured()
