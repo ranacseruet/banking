@@ -106,6 +106,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface
      * @Column(name="address", type="text", nullable=true)
      */
     private $address;
+    
+    /**
+     * @var string $address
+     *
+     * @Column(name="phone", type="text", nullable=true)
+     */
+    private $phone;
+    
 
     /**
      * @var \DateTime $createDate
@@ -371,6 +379,15 @@ class User extends Eloquent implements UserInterface, RemindableInterface
     {
         return $this->birthDate;
     }
+    
+    public function getPhone() {
+        return $this->phone;
+    }
+
+    public function setPhone($phone) {
+        $this->phone = $phone;
+        return $this;
+    }
 
 	/**
 	 * Get the e-mail address where password reminders are sent.
@@ -403,7 +420,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface
                      'password_confirmation'    => 'required|alpha_num|min:6',
                      'email'                    => 'required|email|unique:users',
                      'username'                 => 'required|alpha_num|unique:users',
-                     'birth_date'               => 'required|date'
+                     'birth_date'               => 'required|date',
+                     'phone'                    => 'required|numeric' 
 
         );
     }

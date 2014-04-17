@@ -23,6 +23,7 @@
         {{ Form::text('last_name', null, array('class'=>'input-block-level', 'placeholder'=>'Last Name')) }}
         {{ Form::text('birth_date', null, array('class'=>'input-block-level', 'id' =>'birth_date', 'placeholder'=>'Birth Date')) }}
         {{ Form::text('address', null, array('class'=>'input-block-level', 'placeholder'=> 'Address')) }}
+        {{ Form::text('phone', null, array('class'=>'input-block-level', 'placeholder'=> 'Phone')) }}
     </fieldset>
  
     {{ Form::submit('Register', array('class'=>'btn btn-large btn-primary btn-block'))}}
