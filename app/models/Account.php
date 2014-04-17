@@ -281,7 +281,7 @@ class Account
         return $this->billingAccount;
     }
 
-        /**
+    /**
      * Return all statues / enum type
      *
      * @return array
@@ -293,7 +293,12 @@ class Account
                      self::CHECKING     => 'Checking');
                      //self::CREDIT_CARD  => "Credit Card");
     }
-    
+
+    /**
+     * Return total balance
+     *
+     * @return double
+     */
     public function getBalance()
     {
         $bal = 0;

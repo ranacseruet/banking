@@ -35,6 +35,7 @@ Route::get('account/deposit/id/{id}', 'AccountController@getDeposit');
 Route::get('account/approve/id/{id}', 'AccountController@getApprove');
 Route::get('account/generatepdf/id/{id}', 'AccountController@getGeneratepdf');
 Route::get('account/receipt/id/{id}', 'AccountController@getReceipt');
+Route::get('users/changepassword/id/{id}', 'Users@getChangepassword');
 
 
 

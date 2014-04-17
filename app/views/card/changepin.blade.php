@@ -13,7 +13,7 @@
 
     <br/>
     <div class="form-group">
-		{{ Form::label('pin_no', 'Pin') }}
+		{{ Form::label('pin_no', 'New Pin') }}
 		{{ Form::password('pin_no',  array('class' => 'form-control')) }}
 	</div>
 
@@ -25,6 +25,6 @@
 
      <input type="hidden" name='card_id' value="{{$card_id}}" />
 
-	{{ Form::submit('Update', array('class' => 'btn btn-primary')) }}
+	{{ Form::submit('Update Pin', array('class' => 'btn btn-primary')) }}
 
 {{ Form::close() }}

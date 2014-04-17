@@ -399,11 +399,20 @@ class User extends Eloquent implements UserInterface, RemindableInterface
     {
         return array('first_name'               => 'required|alpha',
                      'last_name'                => 'required|alpha',
-                     'password'                 => 'required|alpha_num|between:6,12|confirmed',
-                     'password_confirmation'    => 'required|alpha_num|between:6,12',
+                     'password'                 => 'required|alpha_num|min:6|confirmed',
+                     'password_confirmation'    => 'required|alpha_num|min:6',
                      'email'                    => 'required|email|unique:users',
                      'username'                 => 'required|alpha_num|unique:users',
                      'birth_date'               => 'required|date'
+
+        );
+    }
+
+    public static function getRulesForChangePassword()
+    {
+        return array('old_password'             => 'required|alpha_num',
+                     'password'                 => 'required|alpha_num|min:6|confirmed',
+                     'password_confirmation'    => 'required|alpha_num|min:6'
 
         );
     }

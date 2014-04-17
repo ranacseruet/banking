@@ -282,16 +282,13 @@ class AccountController extends UserBaseController
     }
 
     /**
-    * Generate PDF For Individual account
+    * Generate Receipt for transaction
     *
     * @route GET /account/receipt/:id
     */
     public function getReceipt($id)
     {
-        $account                = Doctrine::getRepository("Account")->findOneById($id);
-        $this->data['account']  = $account;
-        $html                   = View::make('account.pdf', $this->data);
-
-        return PDF::load($html, 'A4', 'portrait')->download($account->getAccountNo());
+        $this->data['transaction'] = Doctrine::getRepository("Transaction")->findOneById($id);
+        return View::make('account.receipt', $this->data);
     }
 }

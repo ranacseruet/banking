@@ -146,4 +146,50 @@ class UsersController extends BaseController
             $this->layout->content  = View::make('users.dashboard', $this->data);
         }
 	}
+
+    /**
+     * Show the password
+     *
+     * @route post /users/changepassword/id/{:id}
+     */
+    public function getChangepassword($id)
+    {
+        View::share('user_id', $id);
+        $this->layout->content = View::make('users.changepassword');
+    }
+
+
+    /**
+     * show the Pin
+     *
+     * @route post /card/processchangepassword
+     */
+    public function postProcesschangepassword()
+    {
+        $validator = Validator::make(Input::all(), User::getRulesForChangePassword());
+
+        if ($validator->passes()) {
+
+            $userEntity = Doctrine::getRepository("User")->find(Input::get('user_id'));
+
+            if(!Hash::check(Input::get('old_password'), $userEntity->getPassword())) {
+                return Redirect::to('users/changepassword/' . Input::get('user_id'))->with('message', "Old password doen't match");
+            }
+
+            $userEntity->setPassword(Hash::make(Input::get('password')));
+            $userEntity->setUpdateDate(new \DateTime('now'));
+
+			Doctrine::persist($userEntity);
+            Doctrine::flush();
+
+
+			if($userEntity->getRoolId() == User::ADMIN) {
+                return Redirect::to('admin/dashboard')->with('message', 'Password Change Successfully.');
+            } else {
+                return Redirect::to('users/dashboard')->with('message', 'Password Change Successfully.');
+            }
+		} else {
+			return Redirect::to('users/changepassword/' . Input::get('user_id'))->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
+		}
+    }
 }
