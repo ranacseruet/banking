@@ -34,6 +34,7 @@
                                 <li>{{ HTML::link('payee', 'Payee Management') }}</li>
                                 <li>{{ HTML::link('investment', 'Investments') }}</li>
                              @endif
+                            <li>{{ HTML::link('account/passwordupdate/', 'Change Password') }}</li>
                             <li>{{ HTML::link('users/logout', 'logout') }}</li>
                     @endif
                 </ul> 

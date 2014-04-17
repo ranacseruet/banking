@@ -32,4 +32,13 @@ class BaseController extends Controller {
 		}
 	}
 
+    public function doLog($text)
+    {
+        // open log file
+        $logFileName = storage_path() . "/system_log.text";
+        $logger = fopen($logFileName, "a") or die("Could not open log file.");
+
+        fwrite($logger, date("d-m-Y, H:i")." - $text\n") or die("Could not write file!");
+        fclose($logger);
+    }
 }
