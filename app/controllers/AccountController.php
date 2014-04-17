@@ -233,7 +233,7 @@ class AccountController extends UserBaseController
             Doctrine::persist($transaction);
             Doctrine::flush();
 
-            return Redirect::to('admin/dashboard')->with('message', 'Transaction is done successfully.');
+            return Redirect::to('admin/dashboard')->with('message', "Transaction is done successfully. <a href='" . url('account/receipt', array('id' => $transaction->getId())) ."' target='_blank'>Print Receipt</a>.");
         }  else {
             return Redirect::to('account/withdraw/' . Input::get('account_no'))->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
         }
@@ -260,7 +260,7 @@ class AccountController extends UserBaseController
 
             Doctrine::persist($transaction);
             Doctrine::flush();
-            return Redirect::to('admin/dashboard')->with('message', 'Money is deposited Successfully.');
+            return Redirect::to('admin/dashboard')->with('message', "Transaction is done successfully. <a href='" . url('account/receipt', array('id' => $transaction->getId())) ."' target='_blank'>Print Receipt</a>.");
         }  else {
             return Redirect::to('account/deposit/' . Input::get('account_no'))->with('message', 'The following errors occurred')->withErrors($validator)->withInput();
         }
