@@ -2,7 +2,7 @@
     <body>
         <div align="center">
         <h4>Transaction Receipt</h4>
-        <div>
+        </div>
         <hr>
         <!-- Table -->
         <pre>
